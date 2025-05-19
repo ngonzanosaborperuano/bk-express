@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: API de Usuarios
+  title: API de RicoPE
   version: 1.0.0
 
 components:
@@ -43,7 +43,7 @@ paths:
                   nullable: true
                   example: "https://example.com/fotos/juan.jpg"
       responses:
-        '201':
+        "201":
           description: Usuario creado exitosamente
           content:
             application/json:
@@ -53,9 +53,9 @@ paths:
                   id:
                     type: integer
                     example: 42
-        '400':
+        "400":
           description: Datos inválidos o incompletos
-        '500':
+        "500":
           description: Error del servidor
 
   /api/users/login:
@@ -70,47 +70,58 @@ paths:
             schema:
               type: object
               required:
-                - dato
+                - email
                 - password
               properties:
-                dato:
+                email:
                   type: string
                   description: Correo electrónico del usuario
                 password:
                   type: string
                   format: password
             example:
-              dato: juan.perez@example.com
+              email: juan.perez@example.com
               password: "123456"
       responses:
-        '200':
+        "200":
           description: Autenticación exitosa
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  token:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
                     type: string
-                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-                  usuario:
+                    example: Bienvenido Juan Pérez
+                  data:
                     type: object
                     properties:
                       id:
-                        type: integer
-                        example: 42
-                      fullname:
+                        type: string
+                        example: "19"
+                      nombreCompleto:
                         type: string
                         example: Juan Pérez
                       email:
                         type: string
                         example: juan.perez@example.com
-                      rol_id:
-                        type: integer
-                        example: 1
-        '400':
+                      foto:
+                        type: string
+                        format: uri
+                        example: https://example.com/fotos/juan.jpg
+                      fechaCreacion:
+                        type: string
+                        format: date-time
+                        example: "2025-05-17 12:19:54"
+                      sessionToken:
+                        type: string
+                        example: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        "400":
           description: Credenciales inválidas o faltantes
-        '500':
+        "500":
           description: Error del servidor
 
   /api/users/logout:
@@ -133,23 +144,29 @@ paths:
                   type: integer
                   example: 42
       responses:
-        '200':
+        "200":
           description: Sesión cerrada exitosamente
-        '401':
+        "401":
           description: Token no válido o no proporcionado
-        '500':
+        "500":
           description: Error del servidor
 
-  /api/users/perfil:
+  /api/users/{email}:
     get:
-      summary: Obtiene el perfil del usuario autenticado
+      summary: Verificar si un usuario existe
       tags:
         - Usuarios
-      security:
-        - jwtAuth: []
+      parameters:
+        - in: path
+          name: email
+          required: true
+          schema:
+            type: string
+          description: Correo electrónico del usuario a buscar
+          example: juan.perez@example.com
       responses:
-        '200':
-          description: Perfil del usuario autenticado
+        "200":
+          description: Usuario encontrado exitosamente
           content:
             application/json:
               schema:
@@ -157,16 +174,93 @@ paths:
                 properties:
                   id:
                     type: integer
-                    example: 42
-                  fullname:
-                    type: string
-                    example: Juan Pérez
-                  email:
-                    type: string
-                    example: juan.perez@example.com
-                  rol_id:
-                    type: integer
                     example: 1
-        '401':
-          description: Token no válido o no proporcionado
+        "404":
+          description: Usuario no encontrado
+        "500":
+          description: Error del servidor
 
+  /crear-preferencia:
+    post:
+      summary: Crea una preferencia de pago en Mercado Pago
+      tags:
+        - Pagos
+      security:
+        - jwtAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - id
+                      - title
+                      - quantity
+                      - unit_price
+                      - currency_id
+                    properties:
+                      id:
+                        type: string
+                        example: item-ID-1235
+                      title:
+                        type: string
+                        example: Lomo Saltado
+                      description:
+                        type: string
+                        example: Descripción del Item
+                      category_id:
+                        type: string
+                        example: art
+                      quantity:
+                        type: integer
+                        example: 2
+                      unit_price:
+                        type: number
+                        format: float
+                        example: 28.5
+                      currency_id:
+                        type: string
+                        example: PEN
+                      picture_url:
+                        type: string
+                        format: uri
+                        example: https://www.mercadopago.com/org-img/MP3/home/logomp3.gif
+              example:
+                items:
+                  - id: item-ID-1235
+                    title: Lomo Saltado
+                    description: Descripción del Item
+                    category_id: art
+                    quantity: 2
+                    unit_price: 28.5
+                    currency_id: PEN
+                    picture_url: https://www.mercadopago.com/org-img/MP3/home/logomp3.gif
+      responses:
+        "200":
+          description: Preferencia creada exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1258945087-285a1143-a776-4b77-bb66-33471168744b
+                  init_point:
+                    type: string
+                    format: uri
+                    example: https://www.mercadopago.com.pe/checkout/v1/redirect?pref_id=1258945087-285a1143-a776-4b77-bb66-33471168744b
+                  sandbox_init_point:
+                    type: string
+                    format: uri
+                    example: https://sandbox.mercadopago.com.pe/checkout/v1/redirect?pref_id=1258945087-285a1143-a776-4b77-bb66-33471168744b
+        "400":
+          description: Datos inválidos o incompletos
+        "500":
+          description: Error interno del servidor

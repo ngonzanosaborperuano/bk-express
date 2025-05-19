@@ -1,30 +1,25 @@
-import User from '../models/user.js';
 import jwt from 'jsonwebtoken';
 import keys from '../config/keys.js';
+import User from '../models/user.js';
 
-export const registerUser = async (req, res, next) => {
+export const register = async (req, res, next) => {
   try {
     const user = req.body;
     const data = await User.create(user);
-
     return res.status(200).json({
       success: true,
       message: 'Bienvenido.',
-      data: data.id,
+      data: data,
     });
   } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: `Error al registrar al usuario.  ${JSON.stringify(req.body)}`,
-      error: error,
-    });
+    next(error)
   }
 };
 
 export const login = async (req, res, next) => {
   try {
-    const dato = req.body.dato;
-    const password = req.body.password;
+    const dato = req.body.email;
+    const password = req.body.contrasena;
 
     let myUser = await User.findByEmail(dato);
 
@@ -40,33 +35,29 @@ export const login = async (req, res, next) => {
         expiresIn: 60 * 24 * 60 * 30, // 30 días expira el token
       });
       const data = {
-        id: myUser.id,
-        nombre_completo: myUser.nombre_completo,
+        id: +myUser.id,
+        nombreCompleto: myUser.nombre_completo,
         email: myUser.email,
         foto: myUser.foto,
         rol_id: myUser.rol_id,
-        fecha_creacion: myUser.fecha_creacion,
-        session_token: `JWT ${token}`,
+        fechaCreacion: myUser.fecha_creacion,
+        sessionToken: `JWT ${token}`,
       };
       await User.updateToken(myUser.id, `JWT ${token}`);
       return res.status(201).json({
         success: true,
-        message: `Bienvenido ${myUser.name} ${myUser.lastname}`,
+        message: `Bienvenido ${myUser.nombre_completo}`,
         data: data,
       });
     } else {
       return res.status(200).json({
-        success: true,
+        success: false,
         message: 'La contraseña es incorrecta.',
         data: data,
       });
     }
   } catch (error) {
-    return res.status(501).json({
-      success: false,
-      message: 'Error al realizar login, por favor cerrar la app y volver a intentar.',
-      error: error,
-    });
+    next(error)
   }
 };
 
@@ -79,10 +70,28 @@ export const logout = async (req, res, next) => {
       message: 'LA SESION HA EXPIRADO.',
     });
   } catch (error) {
-    return res.status(501).json({
-      success: false,
-      message: 'Error al cerrar sesion.',
-      error: error,
-    });
+    next(error)
+
   }
 };
+
+export const obtener = async (req, res, next) => {
+  try {
+    const email = req.params.email;
+    const data = await User.findByEmail(email);
+    if (!data) {
+      return res.status(200).json({
+        success: false,
+        message: 'Usuario no encontrado.',
+        data: { 'id': 0 }
+      });
+    }
+    return res.status(201).json({
+      success: true,
+      message: 'Usuario encontrado.',
+      data: { 'id': 1 }
+    });
+  } catch (error) {
+    next(error)
+  }
+}

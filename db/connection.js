@@ -1,7 +1,7 @@
 // db/connection.js
-import dotenv from 'dotenv';  // Importando dotenv
-import bluebird from 'bluebird';  // Importando bluebird para manejar promesas
-import pgPromise from 'pg-promise';  // Importando pg-promise
+import bluebird from 'bluebird'; // Importando bluebird para manejar promesas
+import dotenv from 'dotenv'; // Importando dotenv
+import pgPromise from 'pg-promise'; // Importando pg-promise
 
 // Cargar variables de entorno desde el archivo .env
 dotenv.config({ path: './.env' });
@@ -39,7 +39,7 @@ const databaseConfig = {
   'host': 'localhost',  // Configuración de la base de datos local
   'port': 5432,
   'database': 'postgres',
-  'user': 'postgres',
+  'user': 'ngonzano',
   'password': '14@qweszxC',  // Contraseña de la base de datos
   //  ssl: {
   //     rejectUnauthorized: false

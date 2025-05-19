@@ -1,7 +1,7 @@
 // En user.js
-import db from '../db/connection.js';  // Asegúrate de usar import si también deseas usarlo en todo el código
 import crypto from 'crypto';
 import moment from 'moment-timezone';
+import db from '../db/connection.js'; // Asegúrate de usar import si también deseas usarlo en todo el código
 
 const User = {};
 
@@ -9,42 +9,29 @@ User.create = (user) => {
   const fechaPeru = moment().tz('America/Lima').format('YYYY-MM-DD HH:mm:ss');
   const contrasenaHasheada = crypto.createHash('md5').update(user.contrasena).digest('hex');
 
-  const sql = `
-    INSERT INTO usuarios (
-      nombre_completo,
-      email,
-      contrasena,
-      foto,
-      fecha_creacion,
-      fecha_actualizacion
-    ) VALUES ($1, $2, $3, $4, $5, $6)
-    RETURNING id
-  `;
+  const sql = `SELECT crear_usuario($1, $2, $3, $4, $5)`;
 
   const values = [
-    user.fullname,
+    user.nombreCompleto,
     user.email,
-    contrasenaHasheada,
     user.foto || null,
-    fechaPeru,
+    contrasenaHasheada,
     fechaPeru
   ];
+  return db.one(sql, values).then((res) => {
+    return { id: res.crear_usuario };
+  });
 
-  return db.one(sql, values);
+  // return db.one(sql, values);
 }
 
 User.findById = (id) => {
-  const sql = `
-    SELECT id,
-           nombre_completo,
-           email,
-           contrasena,
-           foto,
-           rol_id,
-           fecha_creacion 
-      FROM usuarios
-     WHERE id = $1
-  `;
+  // const sql = `
+  //   SELECT id,nombre_completo,email,contrasena,foto,fecha_creacion 
+  //     FROM usuarios
+  //    WHERE id = $1
+  // `;
+  const sql = `SELECT * FROM find_usuario_por_id($1)`;
   return db.oneOrNone(sql, id);
 }
 
@@ -54,25 +41,15 @@ User.isPasswordMatched = (userPassword, hash) => {
 }
 
 User.findByEmail = (correo) => {
-  const sql = `
-    SELECT id,nombre_completo,email,contrasena,foto,rol_id,fecha_creacion
-      FROM USUARIOS
-     WHERE email = $1
-       AND estado = true
-  `;
+  const sql = `SELECT * FROM find_usuario_por_email($1)`;
   return db.oneOrNone(sql, correo);
 }
 
 User.updateToken = (id, token) => {
-  const sql = ` 
-  UPDATE usuarios SET SESSION_TOKEN= $2
-  WHERE ID=$1 
-  `;
-  return db.none(sql, [
-    id,
-    token
-  ]);
+  const sql = `select actualizar_session_token($1, $2)`;
+  return db.result(sql, [id, token]);
 }
+
 
 // Usamos export default para exportar el objeto User
 export default User;

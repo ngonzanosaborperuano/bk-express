@@ -15,7 +15,8 @@ export const crearPreferenciaController = async (req, res) => {
       sandbox_init_point: result.sandbox_init_point
     });
   } catch (error) {
-    console.error('❌ Error al crear preferencia:', error);
-    res.status(500).json({ error: error.message });
+    next(error)
+    // console.error('❌ Error al crear preferencia:', error);
+    // res.status(500).json({ error: error.message });
   }
 };

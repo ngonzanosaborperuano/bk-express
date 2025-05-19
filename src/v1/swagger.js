@@ -26,7 +26,7 @@ const swaggerDocs = (app, port) => {
   // Log de la URL de la documentación
   console.log(
     // `Documentación disponible en: http://${process.env.DOMAIN}:${port}/api/v1/docs`
-    `Documentación disponible en: http://${process.env.DOMAIN}/api/v1/docs`
+    `Documentación disponible en: https://${process.env.DOMAIN}/api/v1/docs`
   );
 };
 

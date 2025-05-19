@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.ngonzano.comidaperuana",
+    "sha256_cert_fingerprints":
+    ["87:33:FE:FD:B2:82:B2:96:B1:B4:48:B7:F4:2A:90:11:61:C6:AC:E0:E2:12:5C:36:AD:CA:42:F8:A2:77:4A:4B"]
+  }
+}]

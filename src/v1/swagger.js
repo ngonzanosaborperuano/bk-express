@@ -1,5 +1,5 @@
-import swaggerUi from 'swagger-ui-express';  // Importar swagger-ui-express
-import YAML from 'yamljs';  // Importar yamljs
+import swaggerUi from 'swagger-ui-express'; // Importar swagger-ui-express
+import YAML from 'yamljs'; // Importar yamljs
 
 // Cargar el archivo YAML que contiene la definición de la API
 const swaggerDocument = YAML.load('./src/v1/docs/user.docs.yaml');  // Asegúrate de que la ruta es correcta
@@ -25,7 +25,8 @@ const swaggerDocs = (app, port) => {
 
   // Log de la URL de la documentación
   console.log(
-    `Documentación disponible en: http://${process.env.API_APP}:${port}/api/v1/docs`
+    // `Documentación disponible en: http://${process.env.DOMAIN}:${port}/api/v1/docs`
+    `Documentación disponible en: http://${process.env.DOMAIN}/api/v1/docs`
   );
 };
 

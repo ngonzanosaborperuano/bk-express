@@ -10,10 +10,12 @@ import { guardarLog } from './utils/logger.js';
 
 const { Server: SocketIOServer } = socketio;
 
+import { fileURLToPath } from 'url';
 import { applyMiddlewares } from './middleware/appMiddlewares.js';
 import mercadoPago from './routes/mercadoPago.routes.js';
 import users from './routes/user.routes.js';
 import { swaggerDocs } from './src/v1/swagger.js';
+
 
 const serviceAccount = JSON.parse(
   fs.readFileSync(path.resolve('serviceAccountKey.json'), 'utf-8')
@@ -37,6 +39,10 @@ async function recetas() {
   });
 
   applyMiddlewares(app);
+  // Obtener __dirname en ESM
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  app.use('/.well-known', express.static(path.join(__dirname, '.well-known')));
 
   /* Rutas */
   const port = process.env.PORT || 3000;

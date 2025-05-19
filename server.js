@@ -39,7 +39,7 @@ async function recetas() {
   applyMiddlewares(app);
 
   /* Rutas */
-  const port = process.env.PORT_APP || 3000;
+  const port = process.env.PORT || 3000;
   app.set("port", port);
 
   // Llamada a sockets

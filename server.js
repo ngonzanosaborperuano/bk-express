@@ -39,7 +39,6 @@ async function recetas() {
   });
 
   applyMiddlewares(app);
-  // Obtener __dirname en ESM
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   app.use('/.well-known', express.static(path.join(__dirname, '.well-known')));

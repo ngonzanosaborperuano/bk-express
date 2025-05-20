@@ -1,6 +1,6 @@
 // services/mercadoPago.service.js
-import mercadopago from 'mercadopago';
 import dotenv from 'dotenv';
+import mercadopago from 'mercadopago';
 
 dotenv.config();
 
@@ -13,7 +13,7 @@ const crearPreferenciaService = async ({ items }) => {
   const preference = {
     items: items['items'],
     back_urls: {
-      success: "https://www.youtube.com/watch?v=qKEai3f6N3c",
+      success: "https://ricope-e01a994cf2ab.herokuapp.com/welcome",
       failure: "https://www.linkedin.com/feed/",
       pending: "https://www.google.com/",
     },

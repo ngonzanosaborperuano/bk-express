@@ -62,7 +62,7 @@ async function recetas() {
 
   const host = process.env.API_APP || "localhost";
   server.listen(port, host, function () {
-    console.log("ip " + host + " iniciada...");
+    console.log("IP " + host + " iniciada...");
     console.log("App " + process.pid + " iniciada...");
     console.log("Port " + port + " iniciada...");
   });

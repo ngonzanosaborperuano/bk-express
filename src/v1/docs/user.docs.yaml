@@ -23,12 +23,12 @@ paths:
             schema:
               type: object
               required:
-                - fullname
+                - nombreCompleto
                 - email
                 - contrasena
                 - rol_id
               properties:
-                fullname:
+                nombreCompleto:
                   type: string
                   example: Juan Pérez
                 email:
@@ -71,17 +71,17 @@ paths:
               type: object
               required:
                 - email
-                - password
+                - contrasena
               properties:
                 email:
                   type: string
                   description: Correo electrónico del usuario
-                password:
+                contrasena:
                   type: string
                   format: password
             example:
               email: juan.perez@example.com
-              password: "123456"
+              contrasena: "123456"
       responses:
         "200":
           description: Autenticación exitosa

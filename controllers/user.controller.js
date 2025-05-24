@@ -22,7 +22,6 @@ export const login = async (req, res, next) => {
     const password = req.body.contrasena;
 
     let myUser = await User.findByEmail(dato);
-
     if (!myUser) {
       return res.status(401).json({
         success: false,

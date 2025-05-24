@@ -5,7 +5,7 @@ import db from '../db/connection.js'; // Asegúrate de usar import si también d
 
 const User = {};
 
-User.create = (user) => {
+User.create = async (user) => {
   const fechaPeru = moment().tz('America/Lima').format('YYYY-MM-DD HH:mm:ss');
   const contrasenaHasheada = crypto.createHash('md5').update(user.contrasena).digest('hex');
 
@@ -21,16 +21,9 @@ User.create = (user) => {
   return db.one(sql, values).then((res) => {
     return { id: res.crear_usuario };
   });
-
-  // return db.one(sql, values);
 }
 
 User.findById = (id) => {
-  // const sql = `
-  //   SELECT id,nombre_completo,email,contrasena,foto,fecha_creacion 
-  //     FROM usuarios
-  //    WHERE id = $1
-  // `;
   const sql = `SELECT * FROM find_usuario_por_id($1)`;
   return db.oneOrNone(sql, id);
 }
@@ -41,7 +34,7 @@ User.isPasswordMatched = (userPassword, hash) => {
 }
 
 User.findByEmail = (correo) => {
-  const sql = `SELECT * FROM find_usuario_por_email($1)`;
+  const sql = `SELECT * FROM find_usuario_por_email($1::text)`;
   return db.oneOrNone(sql, correo);
 }
 

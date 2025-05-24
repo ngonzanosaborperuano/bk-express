@@ -34,9 +34,9 @@ const databaseConfig = {
   database: process.env.database,
   user: process.env.user,
   password: process.env.password,
-  ssl: {
-    rejectUnauthorized: false
-  },
+  // ssl: {
+  //   rejectUnauthorized: false
+  // },
 };
 
 // Crear la instancia de la base de datos usando pg-promise

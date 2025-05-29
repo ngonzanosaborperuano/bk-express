@@ -4,7 +4,7 @@ import fs from 'fs';
 import http from 'http';
 import multer from 'multer';
 import path from 'path';
-import socketio from 'socket.io'; // ✅ IMPORTACIÓN CORRECTA para ESM + CommonJS
+import socketio from 'socket.io';
 import { guardarLog } from './utils/logger.js';
 
 
@@ -32,13 +32,13 @@ async function recetas() {
     });
     console.log("✅ Firebase Admin inicializado correctamente.");
   }
-
   // Configurar multer
   const upload = multer({
     storage: multer.memoryStorage(),
   });
 
   applyMiddlewares(app);
+
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   app.use('/.well-known', express.static(path.join(__dirname, '.well-known')));

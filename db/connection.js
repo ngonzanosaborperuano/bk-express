@@ -9,7 +9,7 @@ dotenv.config({ path: './.env' });
 const options = {
   promiseLib: bluebird,
   query: (e) => {
-    console.log('🟢 Ejecutando consulta:', e.query);
+    // console.log('🟢 Ejecutando consulta:', e.query);
   },
   error: (err, e) => {
     console.error('🔴 Error en consulta:', err);

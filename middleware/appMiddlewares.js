@@ -22,7 +22,6 @@ export const applyMiddlewares = (app) => {
     configurePassport(passport);
     app.use(passport.initialize());
     app.use(passport.session());
-
     app.disable('x-powered-by');
     // Middleware para logging de cada respuesta HTTP
     app.use((req, res, next) => {

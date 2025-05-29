@@ -13,7 +13,7 @@ const crearPreferenciaService = async ({ items }) => {
   const preference = {
     items: items['items'],
     back_urls: {
-      success: "https://ricope-e01a994cf2ab.herokuapp.com/welcome",
+      success: "https://ricope-e01a994cf2ab.herokuapp.com/home",
       failure: "https://www.linkedin.com/feed/",
       pending: "https://www.google.com/",
     },
@@ -26,8 +26,31 @@ const crearPreferenciaService = async ({ items }) => {
         { "id": "bank_transfer" },// Transferencia bancaria directa
         { "id": "digital_currency" } // Pagos con criptomonedas o monedas digitales.
       ],
-      installments: 12
-    }
+      installments: 12,
+      "payer": {
+        "first_name": "nilton",
+        "last_name": "gonzano",
+        "email": "niltongr@outlook.com",
+        "phone": {
+          "area_code": "51",
+          "number": "946352516"
+        },
+        "identification": {
+          "type": "DNI",
+          "number": "44830744"
+        },
+        "address": {
+          "street_name": "urb rosaluz mzl1 lt10",
+          "street_number": 0,
+          "zip_code": "15117"
+        }
+      },
+      "default_installments": 6,
+    },
+    "external_reference": "1234567890",
+    notification_url: "https://ricope-e01a994cf2ab.herokuapp.com/api/mercadoPago/webhook",
+    binary_mode: true,
+
   };
 
   try {

@@ -1,6 +1,10 @@
 openapi: 3.0.0
 info:
-  title: API de RicoPE
+  title: API de Cocinando
+  description: API para la gestión de usuarios y pagos en la aplicación Cocinando.
+  contact:
+    name: Cocinando Team
+    email: niltongr@outlook.com
   version: 1.0.0
 
 components:

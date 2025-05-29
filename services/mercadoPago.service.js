@@ -18,8 +18,8 @@ const crearPreferenciaService = async ({ items }) => {
       pending: "https://www.google.com/",
     },
     payer: {
-      first_name: "nilton",
-      last_name: "gonzano",
+      name: "nilton",
+      surname: "gonzano rojas",
       email: "niltongr@outlook.com",
       phone: {
         area_code: "51",

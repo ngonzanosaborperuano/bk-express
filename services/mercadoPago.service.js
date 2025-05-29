@@ -17,37 +17,39 @@ const crearPreferenciaService = async ({ items }) => {
       failure: "https://www.linkedin.com/feed/",
       pending: "https://www.google.com/",
     },
-    auto_return: "approved",
-    statement_descriptor: "RicoPE",
+    payer: {
+      first_name: "nilton",
+      last_name: "gonzano",
+      email: "niltongr@outlook.com",
+      phone: {
+        area_code: "51",
+        number: "946352516"
+      },
+      identification: {
+        type: "DNI",
+        number: "44830744"
+      },
+      address: {
+        street_name: "urb rosaluz mzl1 lt10",
+        street_number: 0,
+        zip_code: "15117"
+      },
+      date_created: "2024-04-01T00:00:00Z"
+    },
+
     payment_methods: {
       excluded_payment_types: [
-        { "id": "ticket" }, // Ejemplos: Pago Fácil, RapiPago, Boleto Bancário (en Brasil).
-        { "id": "atm" }, // cajeros automáticos. RedLink, Banelco (Argentina).
-        { "id": "bank_transfer" },// Transferencia bancaria directa
-        { "id": "digital_currency" } // Pagos con criptomonedas o monedas digitales.
+        { id: "ticket" }, // Ejemplos: Pago Fácil, RapiPago, Boleto Bancário (en Brasil).
+        { id: "atm" }, // cajeros automáticos. RedLink, Banelco (Argentina).
+        { id: "bank_transfer" },// Transferencia bancaria directa
+        { id: "digital_currency" } // Pagos con criptomonedas o monedas digitales.
       ],
       installments: 12,
-      "payer": {
-        "first_name": "nilton",
-        "last_name": "gonzano",
-        "email": "niltongr@outlook.com",
-        "phone": {
-          "area_code": "51",
-          "number": "946352516"
-        },
-        "identification": {
-          "type": "DNI",
-          "number": "44830744"
-        },
-        "address": {
-          "street_name": "urb rosaluz mzl1 lt10",
-          "street_number": 0,
-          "zip_code": "15117"
-        }
-      },
-      "default_installments": 6,
+      default_installments: 6,
     },
-    "external_reference": "1234567890",
+    auto_return: "approved",
+    statement_descriptor: "Cocinando",
+    external_reference: "1234567890",
     notification_url: "https://ricope-e01a994cf2ab.herokuapp.com/api/mercadoPago/webhook",
     binary_mode: true,
 

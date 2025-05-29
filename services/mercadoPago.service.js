@@ -23,7 +23,7 @@ const crearPreferenciaService = async ({ items }) => {
       email: "niltongr@outlook.com",
       phone: {
         area_code: "51",
-        number: "946352516"
+        number: 946352516
       },
       identification: {
         type: "DNI",

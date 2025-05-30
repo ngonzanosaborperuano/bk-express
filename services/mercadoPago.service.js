@@ -13,7 +13,7 @@ const crearPreferenciaService = async ({ items }) => {
   const preference = {
     items: items['items'],
     back_urls: {
-      success: "https://ricope-e01a994cf2ab.herokuapp.com/home",
+      success: "https://cocinando.shop/home",
       failure: "https://www.linkedin.com/feed/",
       pending: "https://www.google.com/",
     },
@@ -50,7 +50,7 @@ const crearPreferenciaService = async ({ items }) => {
     auto_return: "approved",
     statement_descriptor: "Cocinando",
     external_reference: "1234567890",
-    notification_url: "https://ricope-e01a994cf2ab.herokuapp.com/api/mercadoPago/webhook",
+    notification_url: "https://cocinando.shop/api/mercadoPago/webhook",
     binary_mode: true,
 
   };

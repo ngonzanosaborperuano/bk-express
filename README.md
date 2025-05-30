@@ -12,10 +12,6 @@ gcloud info
 //
 
 ======================================================
-SSL Certificates
+SSH coneccion
 ======================================================
-sudo apt install python3-certbot-apache
-
-sudo certbot -d ricope-e01a994cf2ab.herokuapp.com
-
-ingresar un email donde enviaran notificaciones
+ssh niltongonzano@34.69.157.202

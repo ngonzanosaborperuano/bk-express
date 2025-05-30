@@ -51,7 +51,7 @@ const crearPreferenciaService = async ({ items }) => {
     auto_return: "approved",
     statement_descriptor: "Cocinando",
     external_reference: "1234567890",
-    notification_url: "https://cocinando.shop/api/mercadoPago/webhook",
+    notification_url: "https://cocinando.shop/notificacion",
     binary_mode: true,
 
   };

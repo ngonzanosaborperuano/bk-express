@@ -7,8 +7,6 @@ export const crearPreferenciaController = async (req, res) => {
 
     const result = await crearPreferenciaService({ items });
 
-    console.log('✅ Preferencia creada:', result.init_point);
-
     res.status(200).json({
       id: result.id,
       init_point: result.init_point,
@@ -20,7 +18,7 @@ export const crearPreferenciaController = async (req, res) => {
     // res.status(500).json({ error: error.message });
   }
 };
-export const enviarWebHooks = async (req, res) => {
+export const sendWebHooks = async (req, res) => {
   try {
     const items = req.body;
     console.log(items);
@@ -40,4 +38,20 @@ export const enviarWebHooks = async (req, res) => {
     // console.error('❌ Error al crear preferencia:', error);
     // res.status(500).json({ error: error.message });
   }
+
+};
+
+export const responseWebHooks = async (req, res) => {
+  try {
+    const topic = req.query.topic || req.query.type;
+    const id = req.query.id || req.query['data.id'];
+
+    console.log('Webhook recibido:', topic, id);
+
+    res.status(200).send('ok');
+
+  } catch (error) {
+    next(error)
+  }
+
 };

@@ -2,7 +2,8 @@ import * as mercadoPagoController from '../controllers/mercadopago.controller.js
 
 const mercadoPagoRoutes = (app, upload) => {
   app.post('/crear-preferencia', mercadoPagoController.crearPreferenciaController);
-  app.post('/notificacion', mercadoPagoController.enviarWebHooks);
+  app.post('/notificacion', mercadoPagoController.sendWebHooks);
+  app.post('/webhook', mercadoPagoController.responseWebHooks);
 };
 
 export default mercadoPagoRoutes;

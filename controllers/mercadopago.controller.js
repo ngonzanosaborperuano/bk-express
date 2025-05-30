@@ -42,6 +42,8 @@ export const sendWebHooks = async (req, res) => {
 };
 export const responseWebHooks = async (req, res) => {
   try {
+    console.log('[Webhook recibido] Query:', req.query);
+    console.log('[Webhook recibido] Body:', req.body);
     const result = await procesarWebhook(req.query, req.body);
     res.status(200).json(result);
 

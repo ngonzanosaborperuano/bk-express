@@ -1,68 +1,84 @@
-// services/mercadoPago.service.js
-import dotenv from 'dotenv';
-import mercadopago from 'mercadopago';
+import mercadopago from '../config/mercadopago.config.js';
 
-dotenv.config();
-
-// Configura el token directamente
-mercadopago.configure({
-  access_token: process.env.MP_ACCESS_TOKEN
-});
+const INTEGRATOR_ID = process.env.MP_INTEGRATOR_ID;
 
 const crearPreferenciaService = async ({ items }) => {
   const preference = {
-    items: items['items'],
+    items,
     back_urls: {
-      success: "https://cocinando.shop/home",
-      failure: "https://www.linkedin.com/feed/",
-      pending: "https://www.google.com/",
+      success: 'https://cocinando.shop/home',
+      failure: 'https://www.linkedin.com/feed/',
+      pending: 'https://www.google.com/',
     },
     payer: {
-      name: "nilton",
-      surname: "gonzano rojas",
-      email: "niltongr@outlook.com",
+      name: 'Nilton',
+      surname: 'Gonzano Rojas',
+      email: 'niltongr@outlook.com',
       phone: {
-        area_code: "51",
-        number: 946352516
+        area_code: '51',
+        number: 946352516,
       },
       identification: {
-        type: "DNI",
-        number: "44830744"
+        type: 'DNI',
+        number: '44830744',
       },
       address: {
-        street_name: "urb rosaluz mzl1 lt10",
+        street_name: 'urb rosaluz mzl1 lt10',
         street_number: 0,
-        zip_code: "15117"
+        zip_code: '15117',
       },
-      date_created: "2024-04-01T00:00:00Z"
+      date_created: '2024-04-01T00:00:00Z',
     },
-
     payment_methods: {
       excluded_payment_types: [
-        { id: "visa" }
-        // { id: "ticket" }, // Ejemplos: Pago Fácil, RapiPago, Boleto Bancário (en Brasil).
-        // { id: "atm" }, // cajeros automáticos. RedLink, Banelco (Argentina).
-        // { id: "bank_transfer" },// Transferencia bancaria directa
-        // { id: "digital_currency" } // Pagos con criptomonedas o monedas digitales.
+        { id: 'ticket' },
+        { id: 'atm' },
+        { id: 'bank_transfer' },
+        { id: 'digital_currency' },
+      ],
+      excluded_payment_methods: [
+        { id: 'visa' },
       ],
       installments: 6,
       default_installments: 1,
     },
-    auto_return: "approved",
-    statement_descriptor: "Cocinando",
-    external_reference: "1234567890",
-    notification_url: "https://cocinando.shop/notificacion",
+    auto_return: 'approved',
+    statement_descriptor: 'Cocinando',
+    external_reference: '1234567890',
+    notification_url: 'https://cocinando.shop/api/mercadoPago/webhook',
     binary_mode: true,
-
+    metadata: {
+      integrator_id: INTEGRATOR_ID,
+    },
   };
 
   try {
-    const result = await mercadopago.preferences.create(preference);
-    return result.response;
+    const response = await mercadopago.preferences.create(preference, {
+      headers: {
+        'X-Integrator-Id': INTEGRATOR_ID,
+      },
+    });
+
+    return response.body;
   } catch (error) {
-    console.error("Error al crear la preferencia:", error);
-    throw error;
+    console.error('[MercadoPagoService] Error al crear la preferencia:', error.message);
+    throw new Error('No se pudo crear la preferencia de pago');
   }
 };
 
-export { crearPreferenciaService };
+const procesarWebhook = async (query, body) => {
+  try {
+    const { id, topic, type } = query;
+
+    console.log('[Webhook] ID:', id || body?.data?.id);
+    console.log('[Webhook] Topic:', topic || body?.type);
+    console.log('[Webhook] Payload:', JSON.stringify(body, null, 2));
+
+    return { status: 'ok' };
+  } catch (error) {
+    console.error('[Webhook] Error procesando el webhook:', error.message);
+    throw new Error('Error procesando webhook');
+  }
+};
+
+export { crearPreferenciaService, procesarWebhook };

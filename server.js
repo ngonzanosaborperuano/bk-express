@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import admin from 'firebase-admin';
 import fs from 'fs';
@@ -23,6 +24,7 @@ const serviceAccount = JSON.parse(
 
 const app = express();
 const server = http.createServer(app);
+dotenv.config();
 
 async function recetas() {
   // Inicializar Firebase

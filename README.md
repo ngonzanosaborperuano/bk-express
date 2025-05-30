@@ -20,4 +20,4 @@ ssh niltongonzano@34.69.157.202
 pm2 stop cocinando
 git pull
 pm2 start server.js --name cocinando -- --autorestart
-pm2 logs server
+pm2 logs

@@ -1,5 +1,5 @@
 // controllers/mercadoPago.controller.js
-import { crearPreferenciaService } from '../services/mercadoPago.service.js';
+import { crearPreferenciaService, procesarWebhook } from '../services/mercadoPago.service.js';
 
 export const crearPreferenciaController = async (req, res) => {
   try {
@@ -40,15 +40,10 @@ export const sendWebHooks = async (req, res) => {
   }
 
 };
-
 export const responseWebHooks = async (req, res) => {
   try {
-    const topic = req.query.topic || req.query.type;
-    const id = req.query.id || req.query['data.id'];
-
-    console.log('Webhook recibido:', topic, id);
-
-    res.status(200).send('ok');
+    const result = await procesarWebhook(req.query, req.body);
+    res.status(200).json(result);
 
   } catch (error) {
     next(error)

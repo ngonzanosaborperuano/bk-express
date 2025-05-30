@@ -3,7 +3,7 @@ import { crearPreferenciaService, procesarWebhook } from '../services/mercadoPag
 
 export const crearPreferenciaController = async (req, res) => {
   try {
-    const items = req.body;
+    const { items } = req.body;
 
     const result = await crearPreferenciaService({ items });
 

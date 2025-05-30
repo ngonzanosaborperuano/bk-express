@@ -39,13 +39,14 @@ const crearPreferenciaService = async ({ items }) => {
 
     payment_methods: {
       excluded_payment_types: [
-        { id: "ticket" }, // Ejemplos: Pago Fácil, RapiPago, Boleto Bancário (en Brasil).
-        { id: "atm" }, // cajeros automáticos. RedLink, Banelco (Argentina).
-        { id: "bank_transfer" },// Transferencia bancaria directa
-        { id: "digital_currency" } // Pagos con criptomonedas o monedas digitales.
+        { id: "visa" }
+        // { id: "ticket" }, // Ejemplos: Pago Fácil, RapiPago, Boleto Bancário (en Brasil).
+        // { id: "atm" }, // cajeros automáticos. RedLink, Banelco (Argentina).
+        // { id: "bank_transfer" },// Transferencia bancaria directa
+        // { id: "digital_currency" } // Pagos con criptomonedas o monedas digitales.
       ],
-      installments: 12,
-      default_installments: 6,
+      installments: 6,
+      default_installments: 1,
     },
     auto_return: "approved",
     statement_descriptor: "Cocinando",

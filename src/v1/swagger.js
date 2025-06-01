@@ -1,6 +1,6 @@
 import swaggerUi from 'swagger-ui-express'; // Importar swagger-ui-express
 import YAML from 'yamljs'; // Importar yamljs
-import { config } from '../../config/config.js';
+import { config } from '../config/config.js';
 
 // Cargar el archivo YAML que contiene la definición de la API
 const swaggerDocument = YAML.load('./src/v1/docs/user.docs.yaml');  // Asegúrate de que la ruta es correcta

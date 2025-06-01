@@ -22,3 +22,18 @@ git pull
 npm install
 pm2 start server.js --name cocinando -- --autorestart
 pm2 logs
+
+======================================================
+
+# limpiar logs
+
+> ~/.pm2/logs/cocinando-error.log
+
+consultar log
+tail -n 100 ~/.pm2/logs/cocinando-error.log
+
+======================================================
+
+# ejecutar
+
+corre la app local con npm start

@@ -5,9 +5,9 @@ import sessionx from 'express-session';
 import helmet from 'helmet';
 import logger from 'morgan';
 import passport from 'passport';
-import configurePassport from '../config/passport.js';
-import { clientErrorHandler, errorHandler, logErrors } from '../middleware/handlerErrors.js';
-import { guardarLog } from '../utils/logger.js'; // Ajusta la ruta según tu estructura
+import configurePassport from '../../src/config/passport.js';
+import { guardarLog } from '../utils/logger.js'; // Ajusta la ruta según tu estructura ../utils/logger.js
+import { clientErrorHandler, errorHandler, logErrors } from './handlerErrors.js';
 
 export const applyMiddlewares = (app) => {
     app.use(logger('dev'));

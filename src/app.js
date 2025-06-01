@@ -16,7 +16,7 @@ import { applyMiddlewares } from './middleware/appMiddlewares.js';
 import { applyGlobalRateLimiter } from './middleware/globalRateLimiter.js';
 import mercadoPago from './routes/mercadoPago.routes.js';
 import users from './routes/user.routes.js';
-import { swaggerDocs } from './src/v1/swagger.js';
+import { swaggerDocs } from './v1/swagger.js';
 
 
 

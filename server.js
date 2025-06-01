@@ -12,12 +12,10 @@ const { Server: SocketIOServer } = socketio;
 
 import { fileURLToPath } from 'url';
 import { config } from './config/config.js';
-import { SslConfig } from './config/sslConfig.js';
 import { applyMiddlewares } from './middleware/appMiddlewares.js';
 import { applyGlobalRateLimiter } from './middleware/globalRateLimiter.js';
 import mercadoPago from './routes/mercadoPago.routes.js';
 import users from './routes/user.routes.js';
-import { createHttpsServer } from './server/createHttpsServer.js';
 import { swaggerDocs } from './src/v1/swagger.js';
 
 
@@ -53,8 +51,6 @@ async function recetas() {
   const port = process.env.PORT || 3000;
   app.set("port", port);
 
-  const sslConfig = new SslConfig();
-  const credentials = sslConfig.getCredentials();
 
   // Llamada a sockets
   // ticketSorteoSocket(io);
@@ -65,8 +61,6 @@ async function recetas() {
   mercadoPago(app)
 
   swaggerDocs(app, port); // Documentación de Swagger
-  createHttpsServer(credentials, app);
-  createHttpRedirect();
 
   app.get("/", (req, res) => {
     res.send("Recetas - raíz");

@@ -53,9 +53,8 @@ async function recetas() {
   const port = process.env.PORT || 3000;
   app.set("port", port);
 
-  const sslConfig = new SslConfig(config.domain);
+  const sslConfig = new SslConfig();
   const credentials = sslConfig.getCredentials();
-  const app = createExpressApp();
 
   // Llamada a sockets
   // ticketSorteoSocket(io);

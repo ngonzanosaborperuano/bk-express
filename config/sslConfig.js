@@ -2,8 +2,8 @@ import fs from 'fs';
 import path from 'path';
 
 export class SslConfig {
-    constructor(domain) {
-        this.certPath = `/etc/letsencrypt/live/${domain}`;
+    constructor() {
+        this.certPath = '/etc/letsencrypt/live/cocinando.shop';
     }
 
     getCredentials() {

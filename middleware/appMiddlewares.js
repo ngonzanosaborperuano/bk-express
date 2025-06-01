@@ -1,16 +1,24 @@
+import compression from 'compression';
 import cors from 'cors';
 import express from 'express';
 import sessionx from 'express-session';
+import helmet from 'helmet';
 import logger from 'morgan';
 import passport from 'passport';
 import configurePassport from '../config/passport.js';
+import { clientErrorHandler, errorHandler, logErrors } from '../middleware/handlerErrors.js';
 import { guardarLog } from '../utils/logger.js'; // Ajusta la ruta según tu estructura
 
 export const applyMiddlewares = (app) => {
     app.use(logger('dev'));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
-    app.use(cors());
+    app.use(cors({
+        origin: ['https://cocinando.shop'],
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    }));
+    app.use(helmet());
+    app.use(compression());
 
     app.use(sessionx({
         secret: 'secret',
@@ -23,6 +31,9 @@ export const applyMiddlewares = (app) => {
     app.use(passport.initialize());
     app.use(passport.session());
     app.disable('x-powered-by');
+    app.use(logErrors);
+    app.use(clientErrorHandler);
+    app.use(errorHandler);
     // Middleware para logging de cada respuesta HTTP
     app.use((req, res, next) => {
         const start = process.hrtime();

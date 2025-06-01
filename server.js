@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import express from 'express';
 import admin from 'firebase-admin';
 import fs from 'fs';
@@ -12,10 +11,16 @@ import { guardarLog } from './utils/logger.js';
 const { Server: SocketIOServer } = socketio;
 
 import { fileURLToPath } from 'url';
+import { config } from './config/config.js';
+import { SslConfig } from './config/sslConfig.js';
 import { applyMiddlewares } from './middleware/appMiddlewares.js';
+import { applyGlobalRateLimiter } from './middleware/globalRateLimiter.js';
 import mercadoPago from './routes/mercadoPago.routes.js';
 import users from './routes/user.routes.js';
+import { createHttpsServer } from './server/createHttpsServer.js';
 import { swaggerDocs } from './src/v1/swagger.js';
+
+
 
 
 const serviceAccount = JSON.parse(
@@ -24,7 +29,7 @@ const serviceAccount = JSON.parse(
 
 const app = express();
 const server = http.createServer(app);
-dotenv.config();
+
 
 async function recetas() {
   // Inicializar Firebase
@@ -44,25 +49,31 @@ async function recetas() {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   app.use('/.well-known', express.static(path.join(__dirname, '.well-known')));
-
   /* Rutas */
   const port = process.env.PORT || 3000;
   app.set("port", port);
+
+  const sslConfig = new SslConfig(config.domain);
+  const credentials = sslConfig.getCredentials();
+  const app = createExpressApp();
 
   // Llamada a sockets
   // ticketSorteoSocket(io);
 
   // Llamando a las rutas
+  applyGlobalRateLimiter(app);
   users(app, upload)
   mercadoPago(app)
 
   swaggerDocs(app, port); // Documentación de Swagger
+  createHttpsServer(credentials, app);
+  createHttpRedirect();
 
   app.get("/", (req, res) => {
     res.send("Recetas - raíz");
   });
 
-  const host = process.env.API_APP || "localhost";
+  const host = config.apiApp || "localhost";
   server.listen(port, host, function () {
     console.log("IP " + host + " iniciada...");
     console.log("App " + process.pid + " iniciada...");

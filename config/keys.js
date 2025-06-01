@@ -1,10 +1,8 @@
 // En keys.js
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { config } from '../config/config.js';
 
 const keys = {
-  secretOrKey: process.env.secretOrKey,
+  secretOrKey: config.secretOrKey,
 };
 
-export default keys;  // Exporta el objeto 'keys' como valor por defecto
+export default keys;  

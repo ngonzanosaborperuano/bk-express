@@ -1,15 +1,14 @@
-import dotenv from 'dotenv';
 import pg from 'pg';
+import { config } from './config/config.js';
+
 const { Client } = pg;
 
-dotenv.config({ path: './.env' });
-
 const client = new Client({
-    host: process.env.host,
-    port: Number(process.env.port),
-    database: process.env.database,
-    user: process.env.user,
-    password: process.env.password,
+    host: config.host,
+    port: Number(config.port),
+    database: config.database,
+    user: config.user,
+    password: config.password,
     ssl: {
         rejectUnauthorized: false
     },

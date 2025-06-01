@@ -1,9 +1,6 @@
 import bluebird from 'bluebird'; // Importando bluebird para manejar promesas
-import dotenv from 'dotenv'; // Importando dotenv
 import pgPromise from 'pg-promise'; // Importando pg-promise
-
-// Cargar variables de entorno desde el archivo .env
-dotenv.config({ path: './.env' });
+import { config } from '../config/config.js';
 
 // Configuración de opciones para pg-promise
 const options = {
@@ -29,11 +26,11 @@ types.setTypeParser(1114, function (stringValue) {
 });
 // Configuración de la base de datos
 const databaseConfig = {
-  host: process.env.host,
-  port: Number(process.env.port),
-  database: process.env.database,
-  user: process.env.user,
-  password: process.env.password,
+  host: config.host,
+  port: Number(config.port),
+  database: config.database,
+  user: config.user,
+  password: config.password,
   // ssl: {
   //   rejectUnauthorized: false
   // },

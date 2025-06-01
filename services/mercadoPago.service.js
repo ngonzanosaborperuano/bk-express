@@ -1,6 +1,11 @@
+import { config } from '../config/config.js';
 import mercadopago from '../config/mercadopago.config.js';
 
-const INTEGRATOR_ID = process.env.MP_INTEGRATOR_ID;
+const MP_HEADERS = {
+  headers: {
+    'X-Integrator-Id': config.mpIntegratorId
+  }
+};
 
 const crearPreferenciaService = async ({ items }) => {
   const preference = {
@@ -36,9 +41,9 @@ const crearPreferenciaService = async ({ items }) => {
         { id: 'bank_transfer' },
         { id: 'digital_currency' },
       ],
-      excluded_payment_methods: [
-        { id: 'visa' },
-      ],
+      // excluded_payment_methods: [
+      //   { id: 'visa' },
+      // ],
       installments: 6,
       default_installments: 1,
     },
@@ -48,16 +53,12 @@ const crearPreferenciaService = async ({ items }) => {
     notification_url: 'https://cocinando.shop/api/mercadoPago/webhook',
     binary_mode: true,
     metadata: {
-      integrator_id: INTEGRATOR_ID,
+      integrator_id: config.mpIntegratorId,
     },
   };
 
   try {
-    const response = await mercadopago.preferences.create(preference, {
-      headers: {
-        'X-Integrator-Id': INTEGRATOR_ID,
-      },
-    });
+    const response = await mercadopago.preferences.create(preference, MP_HEADERS);
 
     return response.body;
   } catch (error) {

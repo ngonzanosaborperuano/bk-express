@@ -5,7 +5,7 @@ export const errorHandler = (err, req, res, next) => {
     res.status(500).json({ message: 'Internal server error' });
 };
 
-export const logErrors = (err, next) => {
+export const logErrors = (err, req, res, next) => {
     console.error(err.stack);
     next(err);
 }

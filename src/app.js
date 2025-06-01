@@ -1,106 +1,48 @@
+// src/app.js
 import express from 'express';
-import admin from 'firebase-admin';
-import fs from 'fs';
-import http from 'http';
 import multer from 'multer';
 import path from 'path';
-import socketio from 'socket.io';
-import { guardarLog } from './utils/logger.js';
-
-
-const { Server: SocketIOServer } = socketio;
-
 import { fileURLToPath } from 'url';
-import { config } from './config/config.js';
+
 import { applyMiddlewares } from './middleware/appMiddlewares.js';
+import { errorHandler } from './middleware/errorHandler.js';
 import { applyGlobalRateLimiter } from './middleware/globalRateLimiter.js';
-import mercadoPago from './routes/mercadoPago.routes.js';
-import users from './routes/user.routes.js';
+import { registerRoutes } from './routes/index.js';
+import { initializeFirebase } from './services/firebaseService.js';
 import { swaggerDocs } from './v1/swagger.js';
 
+export async function createApp() {
+  const app = express();
 
-
-
-const serviceAccount = JSON.parse(
-  fs.readFileSync(path.resolve('serviceAccountKey.json'), 'utf-8')
-);
-
-const app = express();
-const server = http.createServer(app);
-
-
-async function recetas() {
   // Inicializar Firebase
-  if (!admin.apps.length) {
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount)
-    });
-    console.log("✅ Firebase Admin inicializado correctamente.");
-  }
-  // Configurar multer
-  const upload = multer({
-    storage: multer.memoryStorage(),
-  });
+  await initializeFirebase();
+
+  // Multer en memoria (podría inyectarse si queremos más flexibilidad)
+  const upload = multer({ storage: multer.memoryStorage() });
 
   applyMiddlewares(app);
 
+  // Carpetas estáticas
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   app.use('/.well-known', express.static(path.join(__dirname, '.well-known')));
-  /* Rutas */
-  const port = process.env.PORT || 3000;
-  app.set("port", port);
 
-
-  // Llamada a sockets
-  // ticketSorteoSocket(io);
-
-  // Llamando a las rutas
+  // Aplicar rate limiter global
   applyGlobalRateLimiter(app);
-  users(app, upload)
-  mercadoPago(app)
 
-  swaggerDocs(app, port); // Documentación de Swagger
+  // Registrar rutas
+  registerRoutes(app, upload);
 
-  app.get("/", (req, res) => {
-    res.send("Recetas - raíz");
+  // Documentación swagger
+  swaggerDocs(app, app.get('port'));
+
+  // Ruta raíz simple
+  app.get('/', (req, res) => {
+    res.send('Recetas - raíz');
   });
 
-  const host = config.apiApp || "localhost";
-  server.listen(port, host, function () {
-    console.log("IP " + host + " iniciada...");
-    console.log("App " + process.pid + " iniciada...");
-    console.log("Port " + port + " iniciada...");
-  });
+  // Middleware manejo de errores (último)
+  app.use(errorHandler);
 
-  // Middleware global para manejo de errores
-  app.use(async (err, req, res, next) => {
-    const errorInfo = {
-      mensaje: err.message,
-      stack: err.stack,
-      ...(err.code && { code: err.code }),
-      ...(err.detail && { detalle: err.detail }),
-      ...(err.constraint && { restriccion: err.constraint }),
-      ...(err.query && { consulta: err.query }),
-      ...(err.table && { tabla: err.table }),
-      ...(err.schema && { esquema: err.schema }),
-    };
-    await guardarLog({
-      metodo: req.method,
-      ruta: req.originalUrl,
-      cuerpo: req.body,
-      respuesta_ms: 0,
-      estado_http: err.status || 500,
-      mensaje: 'ERROR',
-      error: errorInfo
-    });
-    res.status(err.status || 500).json({
-      success: false,
-      mensaje: 'Error interno del servidor'
-    });
-  });
-
-  return { app, server };
+  return app;
 }
-
-recetas();

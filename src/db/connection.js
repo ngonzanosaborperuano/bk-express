@@ -6,7 +6,7 @@ import { config } from '../config/config.js';
 const options = {
   promiseLib: bluebird,
   query: (e) => {
-    console.log('🟢 Ejecutando consulta:', e.query);
+    // console.log('🟢 Ejecutando consulta:', e.query);
   },
   error: (err, e) => {
     console.error('🔴 Error en consulta:', err);
@@ -35,7 +35,6 @@ const databaseConfig = {
   //   rejectUnauthorized: false
   // },
 };
-console.log('DB config:', databaseConfig);
 // Crear la instancia de la base de datos usando pg-promise
 const db = pgp(databaseConfig);
 

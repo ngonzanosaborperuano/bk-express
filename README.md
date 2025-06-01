@@ -25,15 +25,25 @@ pm2 logs
 
 ======================================================
 
+# consultar log
+
+tail -n 100 ~/.pm2/logs/cocinando-error.log
+
 # limpiar logs
 
 > ~/.pm2/logs/cocinando-error.log
-
-consultar log
-tail -n 100 ~/.pm2/logs/cocinando-error.log
 
 ======================================================
 
 # ejecutar
 
 corre la app local con npm start
+
+======================================================
+Tunel de red para postgres
+======================================================
+ejecutar en la terminal
+ssh -i ~/.ssh/gcp_key -L 5433:10.128.0.2:5432 niltongonzano@34.69.157.202
+
+local
+psql -h 127.0.0.1 -p 5433 -U postgres -d db_cocinando

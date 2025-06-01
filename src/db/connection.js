@@ -6,7 +6,7 @@ import { config } from '../config/config.js';
 const options = {
   promiseLib: bluebird,
   query: (e) => {
-    // console.log('🟢 Ejecutando consulta:', e.query);
+    console.log('🟢 Ejecutando consulta:', e.query);
   },
   error: (err, e) => {
     console.error('🔴 Error en consulta:', err);
@@ -27,7 +27,7 @@ types.setTypeParser(1114, function (stringValue) {
 // Configuración de la base de datos
 const databaseConfig = {
   host: config.host,
-  port: Number(config.port),
+  port: Number(config.portBD),
   database: config.database,
   user: config.user,
   password: config.password,
@@ -35,7 +35,7 @@ const databaseConfig = {
   //   rejectUnauthorized: false
   // },
 };
-
+console.log('DB config:', databaseConfig);
 // Crear la instancia de la base de datos usando pg-promise
 const db = pgp(databaseConfig);
 

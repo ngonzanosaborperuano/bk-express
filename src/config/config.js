@@ -12,4 +12,5 @@ export const config = {
     apiApp: process.env.API_APP,
     domain: process.env.DOMAIN,
     mpAccessToken: process.env.MP_ACCESS_TOKEN,
+    portBD: process.env.port
 };

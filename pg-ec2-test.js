@@ -1,26 +1,21 @@
-import pg from 'pg';
-import { config } from './src/config/config.js';
+import pgPromise from 'pg-promise';
 
-const { Client } = pg;
+const pgp = pgPromise();
 
-const client = new Client({
-    host: config.host,
-    port: Number(config.port),
-    database: config.database,
-    user: config.user,
-    password: config.password,
-    ssl: {
-        rejectUnauthorized: false
-    },
-});
+const databaseConfig = {
+    host: '127.0.0.1',
+    port: 5433,
+    database: 'db_cocinando',
+    user: 'postgres',
+    password: '2go9fanFPSWCLXGu5JyMmeAMSem1',
+};
 
-client.connect()
-    .then(() => {
-        console.log('✅ Conectado a PostgreSQL en EC2');
-        return client.end();
-    })
-    .catch(err => {
-        console.error('❌ Error al conectar:');
-        console.error(err);
-    });
+const db = pgp(databaseConfig);
 
+try {
+    const connection = await db.connect();
+    console.log('Conexión exitosa a PostgreSQL');
+    connection.done(); // cerrar conexión
+} catch (error) {
+    console.error('Error al conectar:', error);
+}

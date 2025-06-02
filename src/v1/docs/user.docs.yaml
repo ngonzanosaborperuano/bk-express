@@ -184,6 +184,7 @@ paths:
         "500":
           description: Error del servidor
 
+  # MercadoPago
   /crear-preferencia:
     post:
       summary: Crea una preferencia de pago en Mercado Pago

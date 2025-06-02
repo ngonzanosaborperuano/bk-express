@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 // Ruta absoluta al archivo YAML
 const swaggerPath = path.resolve(__dirname, './docs/user.docs.yaml');
 const swaggerDocument = YAML.load(swaggerPath);
-
+// console.log(swaggerDocument);
 // Función para configurar la documentación de Swagger
 const swaggerDocs = (app, port) => {
   app.use(
@@ -24,14 +24,6 @@ const swaggerDocs = (app, port) => {
       },
     })
   );
-
-  // Endpoint para obtener la documentación en formato Yaml
-  // app.get('/api/v1/docs.yaml', (req, res) => {
-  //   const yamlPath = path.resolve('src/v1/docs/user.docs.yaml');
-  //   const yamlContent = fs.readFileSync(yamlPath, 'utf-8');
-  //   res.setHeader('Content-Type', 'text/yaml');
-  //   res.send(yamlContent);
-  // });
 
   // Endpoint para obtener la documentación en formato JSON
   app.get('/api/v1/docs.json', (req, res) => {
@@ -47,3 +39,4 @@ const swaggerDocs = (app, port) => {
 
 // Exportar la función swaggerDocs
 export { swaggerDocs };
+

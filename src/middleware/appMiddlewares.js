@@ -37,17 +37,37 @@ export const applyMiddlewares = (app) => {
     // Middleware para logging de cada respuesta HTTP
     app.use((req, res, next) => {
         const start = process.hrtime();
+        // Función para enmascarar campos sensibles en el cuerpo
+        function sanitizarCuerpo(cuerpo) {
+            if (!cuerpo || typeof cuerpo !== 'object') return cuerpo;
 
+            // Hacer una copia profunda para evitar mutar el original
+            const copia = JSON.parse(JSON.stringify(cuerpo));
+
+            // Campos sensibles a enmascarar
+            const camposSensibles = ['contrasena', 'password', 'pwd'];
+
+            camposSensibles.forEach(campo => {
+                if (campo in copia) {
+                    copia[campo] = '********';
+                }
+            });
+
+            return copia;
+        }
         res.on('finish', async () => {
             const diff = process.hrtime(start);
             const tiempo = (diff[0] * 1e3 + diff[1] / 1e6).toFixed(2);
+            if (req.originalUrl === '/' || req.originalUrl.startsWith('/logs')) {
+                return;
+            }
 
             try {
                 if (res.statusCode < 400 && res.statusCode != 304) {
                     await guardarLog({
                         metodo: req.method,
                         ruta: req.originalUrl,
-                        cuerpo: req.body,
+                        cuerpo: sanitizarCuerpo(req.body),
                         respuesta_ms: tiempo,
                         estado_http: res.statusCode,
                         mensaje: 'OK',

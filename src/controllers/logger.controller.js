@@ -11,8 +11,10 @@ export class LogsController {
             const limit = parseInt(req.query.limit) || 25;
             const metodo = req.query.metodo ? req.query.metodo.trim().toUpperCase() : null;
             const estado = req.query.estado ? parseInt(req.query.estado) : null;
+            const respuesta = parseInt(req.query.respuesta) || 0;
 
-            const logs = await this.logsService.listarLogs(limit, metodo, estado);
+
+            const logs = await this.logsService.listarLogs(limit, metodo, estado, respuesta);
 
 
             res.status(200).json({

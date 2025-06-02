@@ -11,7 +11,6 @@ export async function errorHandler(err, req, res, next) {
         ...(err.table && { tabla: err.table }),
         ...(err.schema && { esquema: err.schema }),
     };
-
     await guardarLog({
         metodo: req.method,
         ruta: req.originalUrl,

@@ -84,7 +84,7 @@ paths:
                   type: string
                   format: password
             example:
-              email: juan.perez@example.com
+              email: perez@example.com
               contrasena: "123456"
       responses:
         "200":
@@ -269,3 +269,103 @@ paths:
           description: Datos inválidos o incompletos
         "500":
           description: Error interno del servidor
+  # logs
+  /logs:
+    get:
+      summary: Obtener logs filtrados
+      description: Retorna una lista de logs registrados en la base de datos, con filtros opcionales por método HTTP, estado HTTP y cantidad máxima.
+      tags:
+        - Logs
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 25
+            minimum: 1
+          description: Número máximo de registros a devolver.
+        - in: query
+          name: metodo
+          schema:
+            type: string
+            example:
+          description: Método HTTP para filtrar (GET, POST, PUT, DELETE).
+        - in: query
+          name: estado
+          schema:
+            type: integer
+            example:
+          description: Código de estado HTTP para filtrar.
+        - in: query
+          name: respuesta
+          schema:
+            type: number
+            format: double
+            example:
+          description: Filtra logs cuya respuesta en ms sea mayor a este valor
+
+      responses:
+        "200":
+          description: Lista de logs encontrados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: true
+                  total:
+                    type: integer
+                    example: 3
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1050
+                        metodo:
+                          type: string
+                          example: GET
+                        ruta:
+                          type: string
+                          example: /
+                        cuerpo:
+                          type: object
+                          example: {}
+                        respuesta_ms:
+                          type: number
+                          format: float
+                          example: 825.45
+                        estado_http:
+                          type: integer
+                          example: 200
+                        mensaje:
+                          type: string
+                          example: OK
+                        error:
+                          type: object
+                          nullable: true
+                          example: null
+                        fecha_creacion:
+                          type: string
+                          format: date-time
+                          example: "2025-06-02T02:20:28.856Z"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: false
+                  mensaje:
+                    type: string
+                    example: Error al obtener los logs
+                  error:
+                    type: string
+                    example: Internal Server Error

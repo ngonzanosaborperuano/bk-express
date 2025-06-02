@@ -16,11 +16,11 @@ export async function guardarLog({ metodo, ruta, cuerpo, respuesta_ms, estado_ht
     console.error('Fallo al guardar log:', err.message);
   }
 }
-export async function obtenerLogs(limit, metodo, estado_htp) {
+export async function obtenerLogs(limit, metodo, estado, respuesta) {
   try {
-    const sql = `SELECT * FROM obtener_logs($1, $2, $3)`;
+    const sql = `SELECT * FROM obtener_logs($1, $2, $3, $4)`;
 
-    const logs = await db.any(sql, [limit, metodo, estado_htp]);
+    const logs = await db.any(sql, [limit, metodo, estado, respuesta]);
 
     return logs;
   } catch (err) {

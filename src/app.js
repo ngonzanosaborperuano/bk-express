@@ -13,7 +13,7 @@ import { swaggerDocs } from './v1/swagger.js';
 
 export async function createApp() {
   const app = express();
-  app.set('trust proxy', true);
+  app.set('trust proxy', 1);
   // Inicializar Firebase
   await initializeFirebase();
 

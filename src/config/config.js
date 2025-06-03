@@ -12,5 +12,7 @@ export const config = {
     apiApp: process.env.API_APP,
     domain: process.env.DOMAIN,
     mpAccessToken: process.env.MP_ACCESS_TOKEN,
-    portBD: process.env.port
+    portBD: process.env.port,
+    notification: process.env.NOTIFICATION_URL,
+    backUrl: process.env.BACK_URL,
 };

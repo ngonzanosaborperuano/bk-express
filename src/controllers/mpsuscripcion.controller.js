@@ -2,21 +2,21 @@ import SuscriptionService from '../services/mpsuscripcion.service.js';
 
 const suscriptionService = new SuscriptionService();
 
-class SuscripcionController {
+export class SuscripcionController {
     constructor() { }
 
-    async getSuscripcion(req, res, next) {
+    async get(req, res, next) {
         try {
-            const suscripcion = await suscriptionService.findSuscripcion(req.params.id);
+            const suscripcion = await suscriptionService.find(req.params.id);
             res.json(suscripcion);
         } catch (error) {
             next(error);
         }
     }
 
-    async createSuscription(req, res, next) {
+    async create(req, res, next) {
         try {
-            const suscripcion = await suscriptionService.createSuscription(req.body);
+            const suscripcion = await suscriptionService.create(req.body);
             res.json(suscripcion);
         } catch (error) {
             console.error(error);
@@ -24,11 +24,11 @@ class SuscripcionController {
         }
     }
 
-    async updateSuscripcion(req, res, next) {
+    async update(req, res, next) {
         try {
             const { precio } = req.body;
             const { id } = req.params;
-            const suscUpdate = await suscriptionService.updateSuscription(id, precio);
+            const suscUpdate = await suscriptionService.update(id, precio);
             res.json(suscUpdate);
         } catch (error) {
             console.error(error);
@@ -36,5 +36,3 @@ class SuscripcionController {
         }
     }
 }
-
-export default SuscripcionController;

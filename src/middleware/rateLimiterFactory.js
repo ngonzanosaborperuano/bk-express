@@ -1,7 +1,8 @@
 // middlewares/rateLimiterFactory.js
 import rateLimit from 'express-rate-limit';
 
-class RateLimiterFactory {
+export class RateLimiterFactory {
+  constructor() { }
   createDefaultLimiter() {
     return rateLimit({
       windowMs: 60 * 1000,
@@ -33,4 +34,3 @@ class RateLimiterFactory {
   }
 }
 
-export default new RateLimiterFactory();

@@ -1,9 +1,10 @@
 import http from 'http';
-import { createApp } from './app.js';
+import { AppFactory } from './app.js'; // asegúrate de que `app.js` exporta la clase
 import { config } from './config/config.js';
 
 async function startServer() {
-    const app = await createApp();
+    const appFactory = new AppFactory();
+    const app = await appFactory.init(); // método init de tu clase AppFactory
 
     const port = process.env.PORT || 3000;
     app.set('port', port);
@@ -13,9 +14,9 @@ async function startServer() {
     const server = http.createServer(app);
 
     server.listen(port, host, () => {
-        console.log(`IP ${host} iniciada...`);
-        console.log(`App ${process.pid} iniciada...`);
-        console.log(`Port ${port} iniciada...`);
+        console.log(`✅ IP: ${host}`);
+        console.log(`✅ App PID: ${process.pid}`);
+        console.log(`✅ Listening on port: ${port}`);
     });
 
     return { app, server };

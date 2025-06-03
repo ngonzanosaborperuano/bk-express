@@ -1,9 +1,7 @@
+import { LogsService } from '../services/logger.service.js';
 export class LogsController {
     constructor(logsService) {
-        this.logsService = logsService;
-
-        // Asegura el binding del método para usarlo como handler Express
-        this.obtenerLogs = this.obtenerLogs.bind(this);
+        this.logsService = new LogsService();
     }
 
     async obtenerLogs(req, res) {
@@ -13,9 +11,7 @@ export class LogsController {
             const estado = req.query.estado ? parseInt(req.query.estado) : null;
             const respuesta = parseInt(req.query.respuesta) || 0;
 
-
             const logs = await this.logsService.listarLogs(limit, metodo, estado, respuesta);
-
 
             res.status(200).json({
                 ok: true,

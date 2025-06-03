@@ -1,5 +1,12 @@
-import rateLimiterFactory from './rateLimiterFactory.js';
+import { RateLimiterFactory } from './rateLimiterFactory.js';
 
-export const applyGlobalRateLimiter = (app) => {
-    app.use(rateLimiterFactory.createDefaultLimiter());
-};
+export class RateLimiterGlobal {
+    constructor() {
+        this.rateLimiterFactory = new RateLimiterFactory();
+    }
+
+    applyGlobalRateLimiter(app) {
+        app.use(this.rateLimiterFactory.createDefaultLimiter());
+    }
+
+}

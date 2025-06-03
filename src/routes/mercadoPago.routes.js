@@ -1,16 +1,20 @@
-import * as mercadoPagoController from '../controllers/mercadopago.controller.js';
-import SuscripcionControllers from '../controllers/mpsuscripcion.controller.js';
 
-const ctrl = new SuscripcionControllers();
+import { PreferenciasController } from '../controllers/mppreferencia.controller.js';
+import { SuscripcionController } from '../controllers/mpsuscripcion.controller.js';
 
-const mercadoPagoRoutes = (app, upload) => {
-  app.post('/crear-preferencia', mercadoPagoController.crearPreferenciaController);
-  app.post('/notificacion', mercadoPagoController.sendWebHooks);
-  app.post('/api/mercadoPago/webhook', mercadoPagoController.responseWebHooks);
+export class MpRoutes {
+  constructor() {
+    this.suscripcion = new SuscripcionController();
+    this.preferencia = new PreferenciasController();
+  }
 
-  app.post('/api/suscripcion', ctrl.createSuscription);
-  app.get('/api/suscripcion/:id', ctrl.getSuscripcion);
-  app.put('/api/suscripcion/:id', ctrl.updateSuscripcion);
-};
+  async register(app) {
+    app.post('/mp/preferencia', this.preferencia.create.bind(this.preferencia));
+    app.post('/mp/notificacion', this.preferencia.sendWebHooks.bind(this.preferencia));
+    app.post('/mp/webhook', this.preferencia.responseWebHooks.bind(this.preferencia));
 
-export default mercadoPagoRoutes;
+    app.post('/mp/suscripcion', this.suscripcion.create.bind(this.suscripcion));
+    app.get('/mp/suscripcion/:id', this.suscripcion.get.bind(this.suscripcion));
+    app.put('/mp/suscripcion/:id', this.suscripcion.update.bind(this.suscripcion));
+  }
+}

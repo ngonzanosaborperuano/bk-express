@@ -1,19 +1,25 @@
 import passport from 'passport';
-import * as UsersController from '../controllers/user.controller.js';
-import { applySensitiveRateLimiters } from '../middleware/applySensitiveRateLimiters.js';
-import { verificarAppCheck } from '../middleware/verificarAppCheck.js';
+import { UserController } from '../controllers/user.controller.js';
+import { RateLimiters } from '../middleware/applySensitiveRateLimiters.js';
+import { AppCheckService } from '../middleware/verificarAppCheck.js';
 
-const userRoutes = (app, upload) => {
+export class UserRouter {
+  constructor() {
+    this.user = new UserController();
+    this.rateLimiters = new RateLimiters();
+    this.appCheck = new AppCheckService();
+  }
 
-  applySensitiveRateLimiters(app);
+  async register(app, upload) {
+    this.rateLimiters.applySensitiveRateLimiters(app);
 
-  app.post("/api/users/logout",
-    passport.authenticate("jwt", { session: false }),
-    verificarAppCheck,
-    UsersController.logout
-  );
+    app.post("/api/users/logout",
+      passport.authenticate("jwt", { session: false }),
+      this.appCheck.verificar.bind(this.appCheck),
+      this.user.logout.bind(this.user)
+    );
 
-  app.get("/api/users/:email", UsersController.obtener);
-};
+    app.get("/api/users/:email", this.user.obtener.bind(this.user));
+  }
+}
 
-export default userRoutes;

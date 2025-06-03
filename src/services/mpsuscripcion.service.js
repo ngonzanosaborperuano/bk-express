@@ -1,5 +1,7 @@
 import { config } from '../config/config.js';
 import mercadopago from '../config/mercadopago.config.js';
+import { DatosPagos } from '../domain/entities/DatosPagos.entities.js';
+
 
 const MP_HEADERS = {
     headers: {
@@ -10,9 +12,10 @@ const MP_HEADERS = {
 export default class SucripcionService {
     constructor() { }
 
-    async findSuscripcion(id) {
+    async find(id) {
         try {
             const response = await mercadopago.preapproval.get(id, MP_HEADERS);
+            console.log(response.body);
             return response.body;
             // return response.data;
         } catch (error) {
@@ -22,22 +25,21 @@ export default class SucripcionService {
         }
     }
 
-    async createSuscription(body) {
+    async create(body) {
         try {
-            const bodyMp = {
-                reason: body.title,//Plan mensual premium
-                auto_recurring: {
-                    frequency: 1,//una vez al mes
-                    frequency_type: "months",
-                    transaction_amount: body.precio,
-                    currency_id: "PEN",
-                    start_date: new Date(body.fecha_inicio).toISOString(),
-                    end_date: new Date(body.fecha_fin).toISOString(),
-                },
-                back_url: "https://www.linkedin.com/in/nilton-gonzano-rojas-59aaaa132/",
-                notification_url: "https://cocinando.shop/api/mercadoPago/webhook",
-                payer_email: "niltongr@outlook.com",
-            };
+            const datosPagos = new DatosPagos({
+                reason: body.reason,
+                payerEmail: body.payer_email,
+                backUrl: body.back_url,
+                notificationUrl: body.notification_url,
+                autoRecurring: {
+                    frequency: body.auto_recurring.frequency,
+                    frequencyType: body.auto_recurring.frequency_type,
+                    transactionAmount: body.auto_recurring.transaction_amount,
+                    currencyId: body.auto_recurring.currency_id
+                }
+            });
+            const bodyMp = datosPagos.toMPDatosPagosFormat();
 
             const response = await mercadopago.preapproval.create(bodyMp, MP_HEADERS);
             return response.body;
@@ -49,7 +51,7 @@ export default class SucripcionService {
 
     }
 
-    async updateSuscription(id, precio) {
+    async update(id, precio) {
         try {
             const bodyMp = {
                 auto_recurring: {

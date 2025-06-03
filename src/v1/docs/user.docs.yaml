@@ -185,9 +185,10 @@ paths:
           description: Error del servidor
 
   # MercadoPago
-  /crear-preferencia:
+  /mp/preferencia:
     post:
       summary: Crea una preferencia de pago en Mercado Pago
+      description: Crea una preferencia de pago utilizando la API de Mercado Pago.
       tags:
         - Pagos
       security:
@@ -269,6 +270,159 @@ paths:
           description: Datos inválidos o incompletos
         "500":
           description: Error interno del servidor
+
+  /mp/suscripcion:
+    post:
+      summary: Crear suscripción en Mercado Pago
+      description: Crea una suscripción recurrente utilizando la API de Mercado Pago.
+      tags:
+        - Pagos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  example: Plan mensual premium
+                auto_recurring:
+                  type: object
+                  properties:
+                    frequency:
+                      type: integer
+                      example: 1
+                    frequency_type:
+                      type: string
+                      enum: [days, months]
+                      example: months
+                    transaction_amount:
+                      type: number
+                      example: 100
+                    currency_id:
+                      type: string
+                      example: PEN
+                back_url:
+                  type: string
+                  format: uri
+                  example: https://www.linkedin.com/in/nilton-gonzano-rojas-59aaaa132/
+                notification_url:
+                  type: string
+                  format: uri
+                  example: https://cocinando.shop/api/mercadoPago/webhook
+                payer_email:
+                  type: string
+                  format: email
+                  example: niltongr@outlook.com
+      responses:
+        "200":
+          description: Suscripción creada con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 23cfe6f2e7aa43f3a19c1df17b5d3b77
+                  payer_id:
+                    type: integer
+                    example: 1269594862
+                  payer_email:
+                    type: string
+                    example: ""
+                  back_url:
+                    type: string
+                    example: https://www.linkedin.com/in/nilton-gonzano-rojas-59aaaa132/
+                  collector_id:
+                    type: integer
+                    example: 1258945087
+                  application_id:
+                    type: integer
+                    example: 1181137664744409
+                  status:
+                    type: string
+                    example: pending
+                  reason:
+                    type: string
+                    example: Plan mensual premium
+                  date_created:
+                    type: string
+                    format: date-time
+                    example: 2025-06-03T16:05:23.264-04:00
+                  last_modified:
+                    type: string
+                    format: date-time
+                    example: 2025-06-03T16:05:23.495-04:00
+                  init_point:
+                    type: string
+                    example: https://www.mercadopago.com.pe/subscriptions/checkout?preapproval_id=23cfe6f2e7aa43f3a19c1df17b5d3b77
+                  auto_recurring:
+                    type: object
+                    properties:
+                      frequency:
+                        type: integer
+                        example: 1
+                      frequency_type:
+                        type: string
+                        example: months
+                      transaction_amount:
+                        type: number
+                        example: 100
+                      currency_id:
+                        type: string
+                        example: PEN
+                      free_trial:
+                        type: string
+                        nullable: true
+                  summarized:
+                    type: object
+                    properties:
+                      quotas:
+                        type: string
+                        nullable: true
+                      charged_quantity:
+                        type: string
+                        nullable: true
+                      pending_charge_quantity:
+                        type: string
+                        nullable: true
+                      charged_amount:
+                        type: string
+                        nullable: true
+                      pending_charge_amount:
+                        type: string
+                        nullable: true
+                      semaphore:
+                        type: string
+                        nullable: true
+                      last_charged_date:
+                        type: string
+                        nullable: true
+                      last_charged_amount:
+                        type: string
+                        nullable: true
+                  next_payment_date:
+                    type: string
+                    format: date-time
+                    example: 2025-06-03T16:05:23.000-04:00
+                  payment_method_id:
+                    type: string
+                    nullable: true
+                  payment_method_id_secondary:
+                    type: string
+                    nullable: true
+                  first_invoice_offset:
+                    type: string
+                    nullable: true
+                  subscription_id:
+                    type: string
+                    example: 23cfe6f2e7aa43f3a19c1df17b5d3b77
+                  owner:
+                    type: string
+                    nullable: true
+
   # logs
   /logs:
     get:

@@ -12,7 +12,6 @@ export default function configurePassport(passport) {
     passport.use(
         new JwtStrategy(opts, async (jwt_payload, done) => {
             // console.log("Procesando JWT", jwt_payload);
-
             try {
                 // Usamos async/await para la consulta en lugar de callback
                 const user = await User.findById(jwt_payload.id);

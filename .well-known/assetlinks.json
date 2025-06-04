@@ -1,9 +1,15 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "com.ngonzano.comidaperuana",
-    "sha256_cert_fingerprints":
-    ["87:33:FE:FD:B2:82:B2:96:B1:B4:48:B7:F4:2A:90:11:61:C6:AC:E0:E2:12:5C:36:AD:CA:42:F8:A2:77:4A:4B"]
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.ngonzano.comidaperuana",
+      "sha256_cert_fingerprints": [
+        "87:33:FE:FD:B2:82:B2:96:B1:B4:48:B7:F4:2A:90:11:61:C6:AC:E0:E2:12:5C:36:AD:CA:42:F8:A2:77:4A:4B",
+        "4A:42:B1:51:4A:2F:7E:CD:34:7D:77:8E:54:95:2F:03:C5:A0:68:89:41:0C:36:66:58:1F:F4:DD:DF:91:68:8C"
+      ]
+    }
   }
-}]
+]

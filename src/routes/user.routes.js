@@ -1,3 +1,4 @@
+import passport from 'passport';
 import { UserController } from '../controllers/user.controller.js';
 import { RateLimiters } from '../middleware/applySensitiveRateLimiters.js';
 import { AppCheckService } from '../middleware/verificarAppCheck.js';

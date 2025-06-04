@@ -1,4 +1,4 @@
-import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
 import User from '../models/user.js';
 import keys from './keys.js'; // Asegúrate de exportar `secretOrKey` correctamente en keys.js
 

@@ -19,6 +19,7 @@ ssh -i ~/.ssh/gcp_key niltongonzano@34.69.157.202
 
 bd
 ssh -i ~/.ssh/gcp_key -L 5433:10.128.0.2:5432 niltongonzano@34.69.157.202
+cd proyectos/backend/backend-comida-peruana
 
 pm2 stop cocinando
 git pull

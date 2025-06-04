@@ -1,5 +1,4 @@
 import compression from 'compression';
-import cors from 'cors';
 import express from 'express';
 import session from 'express-session';
 import helmet from 'helmet';
@@ -9,7 +8,6 @@ import passport from 'passport';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { config } from './config/config.js';
 import configurePassport from './config/passport.js';
 import { RateLimiterGlobal } from './middleware/globalRateLimiter.js';
 import { clientErrorHandler, errorHandler, logErrors } from './middleware/handlerErrors.js';
@@ -55,10 +53,10 @@ export class AppFactory {
     this.app.use(logger('dev'));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
-    this.app.use(cors({
-      origin: [`https://${config.domain}`],
-      methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    }));
+    // this.app.use(cors({
+    //   origin: [`https://${config.domain}`],
+    //   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    // }));
     this.app.use(helmet({ contentSecurityPolicy: false }));
     this.app.use(compression());
   }
@@ -114,9 +112,3 @@ export class AppFactory {
     this.app.use(errorHandler);
   }
 }
-
-// Para usar:
-// import { AppFactory } from './AppFactory.js';
-// const appFactory = new AppFactory();
-// const app = await appFactory.init();
-// app.listen(process.env.PORT || 3000);

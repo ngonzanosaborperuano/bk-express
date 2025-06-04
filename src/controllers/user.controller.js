@@ -8,7 +8,18 @@ export class UserController {
   async register(req, res, next) {
     try {
       const user = req.body;
+
+      const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{16,}$/;
+      const isValid = re.test(user.contrasena);
+      if (!isValid) {
+        return res.status(400).json({
+          success: false,
+          message: 'La contraseña no cumple con los requisitos mínimos de seguridad.',
+        });
+      }
+
       const data = await User.create(user);
+
       return res.status(200).json({
         success: true,
         message: 'Bienvenido.',
@@ -27,7 +38,7 @@ export class UserController {
       if (!myUser) {
         return res.status(401).json({
           success: false,
-          message: 'EL usuario no fue encontrado.',
+          message: 'EL usuario no fue encontrado.'
         });
       }
 
@@ -68,10 +79,10 @@ export class UserController {
       return res.status(201).json({
         success: true,
         message: 'LA SESION HA EXPIRADO.',
+        data: { 'id': 0 }
       });
     } catch (error) {
       next(error)
-
     }
   }
   async obtener(req, res, next) {

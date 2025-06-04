@@ -1,4 +1,3 @@
-import passport from 'passport';
 import { UserController } from '../controllers/user.controller.js';
 import { RateLimiters } from '../middleware/applySensitiveRateLimiters.js';
 import { AppCheckService } from '../middleware/verificarAppCheck.js';
@@ -19,7 +18,7 @@ export class UserRouter {
       this.user.logout.bind(this.user)
     );
 
-    app.get("/api/users/:email", this.user.obtener.bind(this.user));
+    app.get("/api/users/:email", this.appCheck.verificar.bind(this.appCheck), this.user.obtener.bind(this.user));
   }
 }
 

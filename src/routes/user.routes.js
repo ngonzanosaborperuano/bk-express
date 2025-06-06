@@ -23,3 +23,4 @@ export class UserRouter {
   }
 }
 
+//implentar express-validator

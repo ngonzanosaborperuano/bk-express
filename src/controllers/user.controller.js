@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import keys from '../config/keys.js';
 import User from '../models/user.js';
+import UserService from '../services/UserService.js';
 
 
 export class UserController {
@@ -18,7 +19,7 @@ export class UserController {
         });
       }
 
-      const data = await User.create(user);
+      const data = await UserService.createUser(user);
 
       return res.status(200).json({
         success: true,
@@ -31,18 +32,17 @@ export class UserController {
   };
   async login(req, res, next) {
     try {
-      const dato = req.body.email;
-      const password = req.body.contrasena;
+      const email = req.body.email;
+      const contrasena = req.body.contrasena;
 
-      let myUser = await User.findByEmail(dato);
+      const myUser = await UserService.loginUser({ email, contrasena })
       if (!myUser) {
         return res.status(401).json({
           success: false,
           message: 'EL usuario no fue encontrado.'
         });
       }
-
-      if (User.isPasswordMatched(password, myUser.contrasena)) {
+      else {
         const token = jwt.sign({ id: myUser.id, email: myUser.email }, keys.secretOrKey, {
           expiresIn: 60 * 24 * 60 * 30, // 30 días expira el token
         });
@@ -61,13 +61,14 @@ export class UserController {
           message: `Bienvenido ${myUser.nombre_completo}`,
           data: data,
         });
-      } else {
-        return res.status(200).json({
-          success: false,
-          message: 'La contraseña es incorrecta.',
-          data: data,
-        });
       }
+      // else {
+      //   return res.status(200).json({
+      //     success: false,
+      //     message: 'La contraseña es incorrecta.',
+      //     data: data,
+      //   });
+      // }
     } catch (error) {
       next(error)
     }

@@ -1,5 +1,5 @@
 // En user.js
-import crypto from 'crypto';
+// import crypto from 'crypto';
 import moment from 'moment-timezone';
 import db from '../db/connection.js'; // Asegúrate de usar import si también deseas usarlo en todo el código
 
@@ -7,7 +7,7 @@ const User = {};
 
 User.create = async (user) => {
   const fechaPeru = moment().tz('America/Lima').format('YYYY-MM-DD HH:mm:ss');
-  const contrasenaHasheada = crypto.createHash('md5').update(user.contrasena).digest('hex');
+  // const contrasenaHasheada = crypto.createHash('md5').update(user.contrasena).digest('hex');
 
   const sql = `SELECT crear_usuario($1, $2, $3, $4, $5)`;
 
@@ -15,7 +15,7 @@ User.create = async (user) => {
     user.nombreCompleto,
     user.email,
     user.foto || null,
-    contrasenaHasheada,
+    user.contrasena,
     fechaPeru
   ];
   return db.one(sql, values).then((res) => {
@@ -28,12 +28,13 @@ User.findById = (id) => {
   return db.oneOrNone(sql, id);
 }
 
-User.isPasswordMatched = (userPassword, hash) => {
-  const myPasswordHashed = crypto.createHash('md5').update(userPassword).digest('hex');
-  return myPasswordHashed === hash;
-}
+// User.isPasswordMatched = (userPassword, hash) => {
+//   const myPasswordHashed = crypto.createHash('md5').update(userPassword).digest('hex');
+//   return myPasswordHashed === hash;
+// }
 
 User.findByEmail = (correo) => {
+
   const sql = `SELECT * FROM find_usuario_por_email($1::text)`;
   return db.oneOrNone(sql, correo);
 }

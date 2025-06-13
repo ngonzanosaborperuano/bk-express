@@ -8,6 +8,7 @@ import passport from 'passport';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { configureGenkit } from '../src/config/genkit.config.js';
 import configurePassport from './config/passport.js';
 import { RateLimiterGlobal } from './middleware/globalRateLimiter.js';
 import { clientErrorHandler, errorHandler, logErrors } from './middleware/handlerErrors.js';
@@ -38,12 +39,18 @@ export class AppFactory {
     this._setupSwagger();
     this._setupRootRoute();
     this._setupErrorHandlers();
+    this._initGenkit();
     return this.app;
   }
 
   _trustProxy() {
     this.app.set('trust proxy', 1);
   }
+
+  async _initGenkit() {
+    configureGenkit();
+  }
+
 
   async _initializeFirebase() {
     await initializeFirebase();

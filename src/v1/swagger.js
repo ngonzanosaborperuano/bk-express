@@ -33,7 +33,7 @@ const swaggerDocs = (app, port) => {
 
   // Log de la URL de la documentación
   console.log(
-    `Documentación disponible en: http://${config.domain}/api/v1/docs`
+    `✅ Documentación disponible en: http://${config.domain}/api/v1/docs`
   );
 };
 

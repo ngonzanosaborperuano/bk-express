@@ -3,7 +3,7 @@ import User from '../models/user.js';
 import keys from './keys.js'; // Asegúrate de exportar `secretOrKey` correctamente en keys.js
 
 export default function configurePassport(passport) {
-    console.log("Iniciando la configuración de passport");
+    console.log("✅ Iniciando la configuración de passport");
 
     const opts = {};
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');

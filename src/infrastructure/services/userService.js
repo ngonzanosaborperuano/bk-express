@@ -1,6 +1,6 @@
 import moment from 'moment-timezone';
-import UserRepository from '../repositories/UserRepository.js';
-import PasswordHasher from '../utils/PasswordHasher.js';
+import UserRepository from '../../infrastructure/repositories/UserRepository.js';
+import PasswordHasher from '../../utils/PasswordHasher.js';
 
 const UserService = {
     async createUser(userData) {

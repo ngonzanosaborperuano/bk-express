@@ -1,4 +1,4 @@
-import { MpPreferenciaService } from '../services/mppreferencia.service.js';
+import { MpPreferenciaService } from '../../infrastructure/services/mppreferencia.service.js';
 
 export class PreferenciasController {
   constructor() {

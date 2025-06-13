@@ -1,4 +1,4 @@
-import { LogsService } from '../services/logger.service.js';
+import { LogsService } from '../../infrastructure/services/logger.service.js';
 export class LogsController {
     constructor(logsService) {
         this.logsService = new LogsService();

@@ -1,4 +1,4 @@
-import { UserController } from '../controllers/user.controller.js';
+import { UserController } from '../interfaces/controllers/user.controller.js';
 import { RateLimiterFactory } from '../middleware/rateLimiterFactory.js';
 import { AppCheckService } from '../middleware/verificarAppCheck.js';
 

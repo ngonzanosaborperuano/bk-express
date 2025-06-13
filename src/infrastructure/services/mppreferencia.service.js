@@ -1,5 +1,5 @@
-import { config } from '../config/config.js';
-import mercadopago from '../config/mercadopago.config.js';
+import { config } from '../../config/config.js';
+import mercadopago from '../../config/mercadopago.config.js';
 
 const MP_HEADERS = {
   headers: {

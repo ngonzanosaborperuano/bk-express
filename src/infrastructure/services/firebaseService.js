@@ -11,7 +11,7 @@ export async function initializeFirebase() {
     const __dirname = path.dirname(__filename);
 
     // Ruta absoluta al archivo YAML
-    const swaggerPath = path.resolve(__dirname, '../../serviceAccountKey.json');
+    const swaggerPath = path.resolve(__dirname, '../../../serviceAccountKey.json');
     const serviceAccountPath = path.resolve(swaggerPath);
     const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf-8'));
 

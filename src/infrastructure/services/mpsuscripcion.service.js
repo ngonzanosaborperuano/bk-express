@@ -1,6 +1,6 @@
-import { config } from '../config/config.js';
-import mercadopago from '../config/mercadopago.config.js';
-import { DatosPagos } from '../domain/entities/DatosPagos.entities.js';
+import { config } from '../../config/config.js';
+import mercadopago from '../../config/mercadopago.config.js';
+import { DatosPagos } from '../../domain/entities/DatosPagos.entities.js';
 
 
 const MP_HEADERS = {

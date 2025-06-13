@@ -8,14 +8,14 @@ import passport from 'passport';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { configureGenkit } from '../src/config/genkit.config.js';
-import configurePassport from './config/passport.js';
-import { RateLimiterGlobal } from './middleware/globalRateLimiter.js';
-import { clientErrorHandler, errorHandler, logErrors } from './middleware/handlerErrors.js';
-import { requestLoggerMiddleware } from './middleware/httpLogger.js';
-import { Routers } from './routes/index.js';
-import { initializeFirebase } from './services/firebaseService.js';
-import { swaggerDocs } from './v1/swagger.js';
+import { configureGenkit } from '../config/genkit.config.js';
+import configurePassport from '../config/passport.js';
+import { initializeFirebase } from '../infrastructure/services/firebaseService.js';
+import { RateLimiterGlobal } from '../middleware/globalRateLimiter.js';
+import { clientErrorHandler, errorHandler, logErrors } from '../middleware/handlerErrors.js';
+import { requestLoggerMiddleware } from '../middleware/httpLogger.js';
+import { swaggerDocs } from '../v1/swagger.js';
+import { Routers } from './routers/index.js';
 
 export class AppFactory {
   constructor() {

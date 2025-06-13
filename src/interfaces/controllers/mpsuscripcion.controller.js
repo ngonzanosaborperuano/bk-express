@@ -1,4 +1,4 @@
-import SuscriptionService from '../services/mpsuscripcion.service.js';
+import SuscriptionService from '../../infrastructure/services/mpsuscripcion.service.js';
 
 const suscriptionService = new SuscriptionService();
 

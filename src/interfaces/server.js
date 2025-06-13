@@ -1,6 +1,6 @@
 import http from 'http';
+import { config } from '../config/config.js';
 import { AppFactory } from './app.js'; // asegúrate de que `app.js` exporta la clase
-import { config } from './config/config.js';
 
 async function startServer() {
     const appFactory = new AppFactory();

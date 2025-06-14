@@ -1,7 +1,7 @@
 // En user.js
 // import crypto from 'crypto';
 import moment from 'moment-timezone';
-import db from '../db/connection.js'; // Asegúrate de usar import si también deseas usarlo en todo el código
+import db from '../../../../db/connection.js'; // Asegúrate de usar import si también deseas usarlo en todo el código
 
 const User = {};
 

@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
-import keys from '../../config/keys.js';
-import UserService from '../../infrastructure/services/UserService.js';
-import User from '../../models/user.js';
+import keys from '../../../../config/keys.js';
+import User from '../../infrastructure/persistence/user.js';
+import UserService from '../../infrastructure/services/userService.js';
 
 
 export class UserController {

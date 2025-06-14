@@ -1,4 +1,4 @@
-import UserModel from '../../models/user.js';
+import UserModel from '../../infrastructure/persistence/user.js';
 
 export default {
     async save(user) {

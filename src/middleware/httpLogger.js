@@ -1,4 +1,4 @@
-import { guardarLog } from '../utils/logger.js';
+import { guardarLog } from '../shared/utils/logger.js';
 
 function sanitizarCuerpo(cuerpo) {
     if (!cuerpo || typeof cuerpo !== 'object') return cuerpo;

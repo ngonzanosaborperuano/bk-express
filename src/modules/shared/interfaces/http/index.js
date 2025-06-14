@@ -1,7 +1,6 @@
-
-import { LoggerRouter } from './logger.routes.js';
-import { MpRoutes } from './mercadoPago.routes.js';
-import { UserRouter } from './user.routes.js';
+import { LoggerRouter } from '../../../logger/interfaces/http/logger.routes.js';
+import { MpRoutes } from '../../../payments/interfaces/http/mercadoPago.routes.js';
+import { UserRouter } from '../../../users/interfaces/http/user.routes.js';
 
 
 export class Routers {

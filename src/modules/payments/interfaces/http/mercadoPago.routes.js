@@ -1,6 +1,5 @@
-
-import { PreferenciasController } from '../controllers/mppreferencia.controller.js';
-import { SuscripcionController } from '../controllers/mpsuscripcion.controller.js';
+import { PreferenciasController } from '../../interfaces/http/mppreferencia.controller.js';
+import { SuscripcionController } from '../../interfaces/http/mpsuscripcion.controller.js';
 
 export class MpRoutes {
   constructor() {

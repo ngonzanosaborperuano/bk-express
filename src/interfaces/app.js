@@ -10,12 +10,12 @@ import { fileURLToPath } from 'url';
 
 import { configureGenkit } from '../config/genkit.config.js';
 import configurePassport from '../config/passport.js';
-import { initializeFirebase } from '../infrastructure/services/firebaseService.js';
+import { swaggerDocs } from '../interfaces/http/v1/swagger.js';
 import { RateLimiterGlobal } from '../middleware/globalRateLimiter.js';
 import { clientErrorHandler, errorHandler, logErrors } from '../middleware/handlerErrors.js';
 import { requestLoggerMiddleware } from '../middleware/httpLogger.js';
-import { swaggerDocs } from '../v1/swagger.js';
-import { Routers } from './routers/index.js';
+import { Routers } from '../modules/shared/interfaces/http/index.js';
+import { initializeFirebase } from '../shared/utils/Firebase.js';
 
 export class AppFactory {
   constructor() {

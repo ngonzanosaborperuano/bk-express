@@ -1,5 +1,5 @@
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
-import User from '../models/user.js';
+import User from '../modules/users/infrastructure/persistence/user.js';
 import keys from './keys.js'; // Asegúrate de exportar `secretOrKey` correctamente en keys.js
 
 export default function configurePassport(passport) {

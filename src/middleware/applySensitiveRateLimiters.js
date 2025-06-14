@@ -1,6 +1,6 @@
-import { UserController } from '../interfaces/controllers/user.controller.js';
-import { RateLimiterFactory } from '../middleware/rateLimiterFactory.js';
-import { AppCheckService } from '../middleware/verificarAppCheck.js';
+import { UserController } from '../modules/users/interfaces/http/user.controller.js';
+import { RateLimiterFactory } from './rateLimiterFactory.js';
+import { AppCheckService } from './verificarAppCheck.js';
 
 export class RateLimiters {
 

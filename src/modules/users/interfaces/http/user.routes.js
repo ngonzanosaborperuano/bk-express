@@ -1,7 +1,7 @@
 import passport from 'passport';
-import { RateLimiters } from '../../middleware/applySensitiveRateLimiters.js';
-import { AppCheckService } from '../../middleware/verificarAppCheck.js';
-import { UserController } from '../controllers/user.controller.js';
+import { RateLimiters } from '../../../../middleware/applySensitiveRateLimiters.js';
+import { AppCheckService } from '../../../../middleware/verificarAppCheck.js';
+import { UserController } from '../../interfaces/http/user.controller.js';
 
 export class UserRouter {
   constructor() {

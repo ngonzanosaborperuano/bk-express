@@ -1,4 +1,4 @@
-import { LogsController } from '../controllers/logger.controller.js';
+import { LogsController } from '../../interfaces/http/logger.controller.js';
 export class LoggerRouter {
     constructor() {
         this.logsController = new LogsController();

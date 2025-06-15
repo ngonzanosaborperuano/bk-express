@@ -28,11 +28,6 @@ User.findById = (id) => {
   return db.oneOrNone(sql, id);
 }
 
-// User.isPasswordMatched = (userPassword, hash) => {
-//   const myPasswordHashed = crypto.createHash('md5').update(userPassword).digest('hex');
-//   return myPasswordHashed === hash;
-// }
-
 User.findByEmail = (correo) => {
 
   const sql = `SELECT * FROM find_usuario_por_email($1::text)`;
@@ -43,7 +38,4 @@ User.updateToken = (id, token) => {
   const sql = `select actualizar_session_token($1, $2)`;
   return db.result(sql, [id, token]);
 }
-
-
-// Usamos export default para exportar el objeto User
 export default User;

@@ -6,7 +6,8 @@ export default function configurePassport(passport) {
     console.log("✅ Iniciando la configuración de passport");
 
     const opts = {};
-    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
+    //opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
+    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
     opts.secretOrKey = keys.secretOrKey;
     opts.algorithms = ['HS256'],
         passport.use(

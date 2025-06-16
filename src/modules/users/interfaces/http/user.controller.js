@@ -53,9 +53,9 @@ export class UserController {
           foto: myUser.foto,
           rol_id: myUser.rol_id,
           fechaCreacion: myUser.fecha_creacion,
-          sessionToken: `jwt ${token}`,
+          sessionToken: `${token}`,
         };
-        await User.updateToken(myUser.id, `jwt ${token}`);
+        await User.updateToken(myUser.id, `${token}`);
         return res.status(201).json({
           success: true,
           message: `Bienvenido ${myUser.nombre_completo}`,

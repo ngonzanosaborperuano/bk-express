@@ -43,7 +43,7 @@ export class UserController {
         });
       }
       else {
-        const token = jwt.sign({ id: myUser.id, email: myUser.email }, keys.secretOrKey, {
+        const token = jwt.sign({ id: myUser.id }, keys.secretOrKey, {
           expiresIn: 60 * 24 * 60 * 30, // 30 días expira el token
         });
         const data = {
@@ -53,9 +53,9 @@ export class UserController {
           foto: myUser.foto,
           rol_id: myUser.rol_id,
           fechaCreacion: myUser.fecha_creacion,
-          sessionToken: `${token}`,
+          sessionToken: `jwt ${token}`,
         };
-        await User.updateToken(myUser.id, `${token}`);
+        await User.updateToken(myUser.id, `jwt ${token}`);
         return res.status(201).json({
           success: true,
           message: `Bienvenido ${myUser.nombre_completo}`,

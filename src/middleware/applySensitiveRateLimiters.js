@@ -12,6 +12,6 @@ export class RateLimiters {
 
     async applySensitiveRateLimiters(app) {
         app.post("/api/users", this.rateLimiterFactory.createSignupLimiter(), this.appCheck.verificar.bind(this.appCheck), this.user.register.bind(this.user));
-        app.post("/api/users/login", this.rateLimiterFactory.createLoginLimiter(), this.appCheck.verificar.bind(this.appCheck), this.user.login.bind(this.user));
+        app.post("/api/users/login", this.rateLimiterFactory.createLoginLimiter(), /*this.appCheck.verificar.bind(this.appCheck),*/ this.user.login.bind(this.user));
     }
 }

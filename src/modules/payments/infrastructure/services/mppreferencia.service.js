@@ -15,8 +15,8 @@ export class MpPreferenciaService {
       items,
       back_urls: {
         success: 'https://cocinando.shop/home',
-        failure: 'https://www.linkedin.com/feed/',
-        pending: 'https://www.google.com/',
+        failure: 'https://cocinando.shop/home',
+        pending: 'https://cocinando.shop/home',
       },
       payer: {
         name: 'Nilton',

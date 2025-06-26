@@ -13,6 +13,7 @@ export const config = {
     domain: process.env.DOMAIN,
     mpAccessToken: process.env.MP_ACCESS_TOKEN,
     portBD: process.env.port,
+    portApp: process.env.PORT_APP,
     notification: process.env.NOTIFICATION_URL,
     backUrl: process.env.BACK_URL,
 };

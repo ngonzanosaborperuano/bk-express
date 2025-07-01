@@ -4,7 +4,8 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon src/interfaces/server.js",
-    "start": "node src/interfaces/server.js"
+    "start": "node src/interfaces/server.js",
+    "build": "tsc"
   },
   "author": "Nilton Gonzano Rojas",
   "license": "ISC",

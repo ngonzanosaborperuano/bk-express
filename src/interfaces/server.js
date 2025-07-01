@@ -6,7 +6,7 @@ async function startServer() {
     const appFactory = new AppFactory();
     const app = await appFactory.init(); // método init de tu clase AppFactory
 
-    const port = config.portApp || 3000;
+    const port = config.portApp || 3001;
     app.set('port', port);
 
     const host = config.apiApp || 'localhost';

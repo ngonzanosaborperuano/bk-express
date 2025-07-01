@@ -110,7 +110,7 @@ export class AppFactory {
   }
 
   _setupRootRoute() {
-    this.app.get('/', (req, res) => res.send('Cociando - raíz'));
+    this.app.get('/', (req, res) => res.send('Cociando - express'));
   }
 
   _setupErrorHandlers() {

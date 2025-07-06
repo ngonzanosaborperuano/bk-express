@@ -9,7 +9,7 @@ async function startServer() {
     const port = config.portApp || 3001;
     app.set('port', port);
 
-    const host = config.apiApp || 'localhost';
+    const host = config.apiApp || '0.0.0.0';
 
     const server = http.createServer(app);
 

@@ -10,7 +10,7 @@ export class RecipeRouter {
     }
 
     async register(app) {
-        await app.post('/api/v1/recipe',
+        await app.post('/recipe',
             //passport.authenticate("jwt", { session: false }),
             //this.appCheck.verificar.bind(this.appCheck),
             this.controller.createRecipe.bind(this.controller),

@@ -8,6 +8,7 @@ import passport from 'passport';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { collectDefaultMetrics, register } from 'prom-client';
 import { configureGenkit } from '../config/genkit.config.js';
 import configurePassport from '../config/passport.js';
 import { swaggerDocs } from '../interfaces/http/v1/swagger.js';
@@ -16,10 +17,10 @@ import { clientErrorHandler, errorHandler, logErrors } from '../middleware/handl
 import { requestLoggerMiddleware } from '../middleware/httpLogger.js';
 import { Routers } from '../modules/shared/interfaces/http/index.js';
 import { initializeFirebase } from '../shared/utils/Firebase.js';
-
 export class AppFactory {
   constructor() {
     this.app = express();
+    collectDefaultMetrics();
     this.upload = multer({ storage: multer.memoryStorage() });
     this.routes = new Routers();
     this.rateLimitGlobal = new RateLimiterGlobal();
@@ -42,6 +43,7 @@ export class AppFactory {
     this._initGenkit();
     return this.app;
   }
+
 
   _trustProxy() {
     this.app.set('trust proxy', 1);
@@ -102,6 +104,10 @@ export class AppFactory {
   }
 
   _registerRoutes() {
+    this.app.get('/metrics', async (req, res) => {
+      res.set('Content-Type', register.contentType);
+      res.end(await register.metrics());
+    });
     this.routes.registerRoutes(this.app, this.upload);
   }
 

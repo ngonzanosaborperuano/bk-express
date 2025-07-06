@@ -4,7 +4,7 @@ const pgp = pgPromise();
 
 const databaseConfig = {
     host: '127.0.0.1',
-    port: 5433,
+    port: 5432,
     database: 'db_cocinando',
     user: 'postgres',
     password: '2go9fanFPSWCLXGu5JyMmeAMSem1',

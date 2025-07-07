@@ -15,7 +15,7 @@ export class UserRouter {
 
     app.post("/api/users/logout",
       passport.authenticate("jwt", { session: false }),
-      //this.appCheck.verificar.bind(this.appCheck),
+      this.appCheck.verificar.bind(this.appCheck),
       this.user.logout.bind(this.user)
     );
 

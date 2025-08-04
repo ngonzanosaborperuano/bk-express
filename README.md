@@ -15,10 +15,10 @@ gcloud info
 SSH coneccion
 ======================================================
 server
-ssh -i ~/.ssh/gcp_key niltongonzano@34.69.157.202
+ssh -i ~/.ssh/gcp_key niltongonzano@34.45.208.209
 
 bd
-ssh -i ~/.ssh/gcp_key -L 5433:10.128.0.2:5432 niltongonzano@34.69.157.202
+ssh -i ~/.ssh/gcp_key -L 5433:10.128.0.2:5432 niltongonzano@34.45.208.209
 cd proyectos/backend/backend-comida-peruana
 
 pm2 stop cocinando

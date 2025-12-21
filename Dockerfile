@@ -16,7 +16,7 @@ COPY --from=build /usr/src/app ./
 
 EXPOSE 3001
 
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "run", "start"]
 
 #PROD
 # Etapa 1: Build (instala todas las dependencias y prepara el código)

@@ -9,6 +9,11 @@ FROM node:22-slim
 
 WORKDIR /usr/src/app
 
+# Necesario para healthcheck (docker-compose usa `curl`)
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends curl \
+  && rm -rf /var/lib/apt/lists/*
+
 COPY package*.json ./
 RUN npm install --omit=dev
 
